@@ -376,7 +376,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-15 — Implement explanation and checklist verification
 
-- [ ] **P1-15: Implement explanation and checklist verification**
+- [x] **P1-15: Implement explanation and checklist verification**
 
 **Depends on:** P1-14.
 
@@ -386,15 +386,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Verify token/version/revision, validate candidate IDs and rebuild evidence from the server catalog.
+- [x] Verify token/version/revision, validate candidate IDs and rebuild evidence from the server catalog.
 
-- [ ] Check every generated sentence and checklist item in one batch, including stronger-than-source “required” wording.
+- [x] Check every generated sentence and checklist item in one batch, including stronger-than-source “required” wording.
 
-- [ ] Return approved IDs or whole-card curated fallback; reject invented URLs/amounts and malformed responses.
+- [x] Return approved IDs or whole-card curated fallback; reject invented URLs/amounts and malformed responses.
 
 **Acceptance:**
 
-- [ ] Nothing unverified is approved on timeout/missing answers; all six program drafts fit one bounded batch
+- [x] Nothing unverified is approved on timeout/missing answers; all six program drafts fit one bounded batch
 
 **Verify:** Supported/unsupported paraphrase fixtures, injection and token-tampering integration cases.
 
@@ -402,7 +402,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-16 — Evaluate Jev policy on labeled synthetic cases
 
-- [ ] **P1-16: Evaluate Jev policy on labeled synthetic cases**
+- [x] **P1-16: Evaluate Jev policy on labeled synthetic cases**
 
 **Depends on:** P1-15.
 
@@ -412,15 +412,16 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Independently label screening evidence, required uncertainty and unsupported claims.
+- [x] Independently label screening evidence, required uncertainty and unsupported claims.
 
-- [ ] Run mocked regression and live synthetic evaluation when the configured provider is available; preserve exact counts and versions.
+- [x] Run mocked regression and live synthetic evaluation when the configured provider is available; preserve exact counts and versions. *(Live not available in this environment; recorded as a release blocker.)*
 
-- [ ] Tune on development data only; check held-out false-strong matches and verifier false accepts; document limitations.
+- [x] Tune on development data only; check held-out false-strong matches and verifier false accepts; document limitations.
 
 **Acceptance:**
 
-- [ ] Policy meets the seeded blocking-case criteria or explicitly falls back; unavailable live evaluation is a recorded release blocker
+- [x] Policy meets the seeded blocking-case criteria or explicitly falls back; unavailable live evaluation is a recorded release blocker *(zero false strong matches, zero unsupported-claim approvals; live evaluation and defects D1/D2 recorded as open blockers)*
+
 
 **Verify:** Evaluation script plus threshold boundary regression; do not claim population calibration.
 

@@ -1,0 +1,91 @@
+{
+  "task": "P1-16",
+  "mode": "mock",
+  "set": "all",
+  "repeats": 1,
+  "generatedAt": "2026-09-19T21:01:59.595Z",
+  "versions": {
+    "catalogVersion": "1.0.0",
+    "rulesVersion": "1.0.0",
+    "questionVersion": "1.0.0",
+    "policyVersion": "1.0.0",
+    "verificationQuestionVersion": "1.0.0",
+    "verificationPolicyVersion": "1.0.0",
+    "model": "jev-1.13.0"
+  },
+  "thresholds": {
+    "display": {
+      "likelyMinScore": 1.7,
+      "likelyMinConfidence": 0.8,
+      "lowConfidence": 0.5,
+      "contradictionMaxScore": 1,
+      "maxFollowUpTurns": 3,
+      "maxFollowUpsPerTurn": 3
+    },
+    "verification": {
+      "maxUnsupportedRisk": 0.1,
+      "maxItemsPerProgram": 9,
+      "maxProgramsPerBatch": 6
+    }
+  },
+  "runs": [
+    {
+      "run": 1,
+      "dev": {
+        "labelCases": 24,
+        "labelMatches": 19,
+        "confusion": {
+          "possibly->possibly": 14,
+          "notAClearMatch->notAClearMatch": 5,
+          "possibly->notAClearMatch": 5
+        },
+        "falseStrongMatches": [],
+        "labelMismatches": [
+          "medicare.msp_qmb_individual_under_limits.supportive: expected possibly, got notAClearMatch",
+          "medicare.msp_subprogram_boundary.confidentNegative: expected possibly, got notAClearMatch",
+          "medicare.msp_resources_unknown.lowConfidence: expected possibly, got notAClearMatch",
+          "lifeline.snap_enrolled.supportive: expected possibly, got notAClearMatch",
+          "lifeline.snap_predicted_not_enrolled.confidentNegative: expected possibly, got notAClearMatch"
+        ],
+        "knownDefectMismatches": [
+          "medicare.msp_qmb_individual_under_limits.supportive: expected possibly, got notAClearMatch [D2.medicare_parallel_pathways]",
+          "medicare.msp_subprogram_boundary.confidentNegative: expected possibly, got notAClearMatch [D2.medicare_parallel_pathways]",
+          "medicare.msp_resources_unknown.lowConfidence: expected possibly, got notAClearMatch [D2.medicare_parallel_pathways]",
+          "lifeline.snap_enrolled.supportive: expected possibly, got notAClearMatch [D1.exclusion_rule_polarity]",
+          "lifeline.snap_predicted_not_enrolled.confidentNegative: expected possibly, got notAClearMatch [D1.exclusion_rule_polarity]"
+        ],
+        "unexplainedLabelMismatches": [],
+        "uncertainShare": 0.583,
+        "verifyCases": 24,
+        "verifyFalseAccepts": [],
+        "verifyFalseRejects": [],
+        "verifyUnexpected": []
+      },
+      "heldout": {
+        "labelCases": 12,
+        "labelMatches": 10,
+        "confusion": {
+          "possibly->possibly": 9,
+          "possibly->notAClearMatch": 1,
+          "notAClearMatch->notAClearMatch": 1,
+          "notAClearMatch->possibly": 1
+        },
+        "falseStrongMatches": [],
+        "labelMismatches": [
+          "medicare.extra_help_automatic_via_ssi.supportive: expected possibly, got notAClearMatch",
+          "lifeline.already_has_benefit.supportive: expected notAClearMatch, got possibly"
+        ],
+        "knownDefectMismatches": [
+          "medicare.extra_help_automatic_via_ssi.supportive: expected possibly, got notAClearMatch [D2.medicare_parallel_pathways]",
+          "lifeline.already_has_benefit.supportive: expected notAClearMatch, got possibly [D1.exclusion_rule_polarity]"
+        ],
+        "unexplainedLabelMismatches": [],
+        "uncertainShare": 0.833,
+        "verifyCases": 18,
+        "verifyFalseAccepts": [],
+        "verifyFalseRejects": [],
+        "verifyUnexpected": []
+      }
+    }
+  ]
+}

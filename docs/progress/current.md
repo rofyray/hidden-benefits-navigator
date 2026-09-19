@@ -1,7 +1,8 @@
 # Progress
 
-Last completed: **P1-14 — Expose the thin evaluation route** (2026-09-19)
-Current task: **P1-15** — not started
+Last completed: **P1-16 — Evaluate Jev policy on labeled synthetic cases** (2026-09-19)
+Current task: **P1-17** — not started
+
 
 ## Completed
 
@@ -21,8 +22,27 @@ Current task: **P1-15** — not started
 | P1-12 Evaluation questions and response validation | docs/evidence/P1-12.md |
 | P1-13 Labels, ranking and clarification selection | docs/evidence/P1-13.md |
 | P1-14 Thin evaluation route | docs/evidence/P1-14.md |
+| P1-15 Explanation and checklist verification | docs/evidence/P1-15.md |
+| P1-16 Labeled policy evaluation | docs/evidence/P1-16.md |
 
 ## Open blockers
+
+- **D1 (screening, from P1-16): exclusion-effect rule polarity is inverted.**
+  `rule.lifeline.one_per_household` excludes the wrong people: someone who already
+  has Lifeline is not excluded, and someone who does not is. It is the only
+  `effect: "exclusion"` rule in the catalog. Repro and fix direction in
+  docs/evidence/P1-16.md.
+- **D2 (Medicare data, from P1-16): parallel individual/couple pathways read as
+  exclusions.** Every single applicant is shown "Not a clear match" for Medicare
+  cost help because they fail the couple composite. Needs `any` wrappers around
+  each individual/couple pair in the Medicare catalog. See docs/evidence/P1-16.md.
+- **Live synthetic evaluation has not been run** (`bun run test:eval --live`): it
+  needs the configured provider and the hosted `EVALUATION_TOKEN_SECRET`. Recorded
+  release blocker per the release plan.
+- **The "Likely" label is untested on positive cases.** Five of six programs are
+  capped at "Possibly" by unverified source effective dates, so the labeled
+  evaluation could not exercise the strong-match path. Re-run once the 403-blocked
+  sources below are verified.
 
 - Texas Lifeline state site (texaslifeline.org) and the Texas PUC low-income assistance page return HTTP 403; the destination is verified via USAC, but its present-day steps are not described.
 
@@ -30,3 +50,4 @@ Current task: **P1-15** — not started
 - CEAP income guidelines page returned HTTP 403 during earlier research; to be re-attempted at its task.
 - WIC income table effective period could NOT be verified: the federal WIC income eligibility guidelines page returns HTTP 403 and the state page publishes the table undated. Figures are used with the caveat recorded on the rule; review due 2026-12-19.
 - The Jev API key was shared in chat and must be rotated before public deployment.
+

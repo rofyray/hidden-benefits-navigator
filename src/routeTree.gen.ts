@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PreflightRouteImport } from './routes/preflight'
 import { Route as ApiEvaluateRouteImport } from './routes/api/evaluate'
+import { Route as ApiVerifyRouteImport } from './routes/api/verify'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const ApiEvaluateRoute = ApiEvaluateRouteImport.update({
   path: '/api/evaluate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiVerifyRoute = ApiVerifyRouteImport.update({
+  id: '/api/verify',
+  path: '/api/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
   id: '/api/public/health',
   path: '/api/public/health',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/preflight': typeof PreflightRoute
   '/api/evaluate': typeof ApiEvaluateRoute
+  '/api/verify': typeof ApiVerifyRoute
   '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/preflight': typeof PreflightRoute
   '/api/evaluate': typeof ApiEvaluateRoute
+  '/api/verify': typeof ApiVerifyRoute
   '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,30 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/preflight': typeof PreflightRoute
   '/api/evaluate': typeof ApiEvaluateRoute
+  '/api/verify': typeof ApiVerifyRoute
   '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/preflight' | '/api/evaluate' | '/api/public/health'
+  fullPaths:
+    '/' | '/preflight' | '/api/evaluate' | '/api/verify' | '/api/public/health'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/preflight' | '/api/evaluate' | '/api/public/health'
-  id: '__root__' | '/' | '/preflight' | '/api/evaluate' | '/api/public/health'
+  to:
+    '/' | '/preflight' | '/api/evaluate' | '/api/verify' | '/api/public/health'
+  id:
+    | '__root__'
+    | '/'
+    | '/preflight'
+    | '/api/evaluate'
+    | '/api/verify'
+    | '/api/public/health'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PreflightRoute: typeof PreflightRoute
   ApiEvaluateRoute: typeof ApiEvaluateRoute
+  ApiVerifyRoute: typeof ApiVerifyRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
 }
 
@@ -92,6 +110,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiEvaluateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/verify': {
+      id: '/api/verify'
+      path: '/api/verify'
+      fullPath: '/api/verify'
+      preLoaderRoute: typeof ApiVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/health': {
       id: '/api/public/health'
       path: '/api/public/health'
@@ -106,6 +131,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PreflightRoute: PreflightRoute,
   ApiEvaluateRoute: ApiEvaluateRoute,
+  ApiVerifyRoute: ApiVerifyRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
 }
 export const routeTree = rootRouteImport
