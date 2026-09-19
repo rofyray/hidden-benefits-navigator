@@ -112,7 +112,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P2-05 — Connect evaluation with revision-safe orchestration
 
-- [ ] **P2-05: Connect evaluation with revision-safe orchestration**
+- [x] **P2-05: Connect evaluation with revision-safe orchestration**
 
 **Depends on:** P2-04.
 
@@ -122,15 +122,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Submit only confirmed allowlisted facts and all six IDs to the thin server.
+- [x] Submit only confirmed allowlisted facts and all six IDs to the thin server.
 
-- [ ] Handle catalog mismatch, signed snapshot, rules-mode response and safe recoverable errors.
+- [x] Handle catalog mismatch, signed snapshot, rules-mode response and safe recoverable errors.
 
-- [ ] Abort/ignore stale requests on edit/reset, with visible stage state.
+- [x] Abort/ignore stale requests on edit/reset, with visible stage state.
 
 **Acceptance:**
 
-- [ ] Only the active revision can produce results; six-program evaluation remains batched
+- [x] Only the active revision can produce results; six-program evaluation remains batched
 
 **Verify:** Delayed-response/race/reset integration and component tests.
 

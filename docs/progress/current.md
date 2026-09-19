@@ -1,7 +1,7 @@
 # Progress
 
-Last completed: **P2-04 — One-question clarification** (2026-09-19)
-Current task: **P2-05** — not started
+Last completed: **P2-05 — Connect evaluation with revision-safe orchestration** (2026-09-19)
+Current task: **P2-06** — not started
 
 
 ## Completed
@@ -29,6 +29,7 @@ Current task: **P2-05** — not started
 | P2-02 Structured extraction | docs/evidence/P2-02.md |
 | P2-03 Fact review and manual entry | docs/evidence/P2-03.md |
 | P2-04 One-question clarification | docs/evidence/P2-04.md |
+| P2-05 Evaluation orchestration | docs/evidence/P2-05.md |
 
 ## Open blockers
 

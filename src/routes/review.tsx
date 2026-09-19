@@ -1,5 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { CATALOG_VERSION } from "@/shared/catalog";
+import {
+  createEvaluationOrchestrator,
+  initialEvaluationState,
+  type EvaluationState,
+} from "@/client/evaluate";
 import {
   COMMON_FIELDS,
   fieldsForGroups,
@@ -60,14 +66,24 @@ function Review() {
   const [session, setSession] = useState(initialClarifySession());
   const [note, setNote] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
+  const [screening, setScreening] = useState<EvaluationState>(initialEvaluationState());
 
-  const dispatch = (action: ReviewAction) =>
+  // One orchestrator for the life of the screen: it owns the request in flight
+  // and drops any answer that no longer belongs to the current answers.
+  const orchestrator = useRef(createEvaluationOrchestrator()).current;
+  useEffect(() => orchestrator.subscribe(setScreening), [orchestrator]);
+  useEffect(() => () => orchestrator.invalidate(), [orchestrator]);
+
+  const dispatch = (action: ReviewAction) => {
+    if (action.type !== "confirm") orchestrator.invalidate();
     setState((previous) => reviewReducer(previous, action));
+  };
 
   const currentQuestion = session.currentId ? questionById(session.currentId) : undefined;
 
   const answer = (input: ClarifyAnswer) => {
     const step = answerCurrent(state, session, input);
+    if (step.review.revision !== state.revision) orchestrator.invalidate();
     setState(step.review);
     setSession(step.session);
   };
@@ -189,21 +205,46 @@ function Review() {
     );
   };
 
-  const confirmAndProject = () => {
+  const confirmAndScreen = () => {
     dispatch({ type: "confirm" });
     const projection = projectEvaluateRequest(
       { ...state, confirmed: true },
       {
-        catalogVersion: "1.1.0",
+        catalogVersion: CATALOG_VERSION,
         programIds: ["snap", "wic", "medicare_help", "lifeline", "eitc", "ceap"],
       },
     );
-    setNote(
-      projection.ok
-        ? "Your answers are ready to be screened. Only the answers below would be sent — not what you typed."
-        : "Something in the answers still needs fixing before screening.",
-    );
+    if (!projection.ok) {
+      setNote("Something in the answers still needs fixing before screening.");
+      return;
+    }
+    setNote("Only the answers below are sent — not what you typed.");
+    void orchestrator.submit(projection.request);
   };
+
+  const screeningMessage = (() => {
+    switch (screening.stage) {
+      case "submitting":
+        return "Checking all six programs\u2026";
+      case "ready":
+        if (screening.forRevision !== state.revision) return null;
+        return screening.response?.engine === "rules"
+          ? "All six programs were checked using the published rules on their own."
+          : "All six programs were checked.";
+      case "failed": {
+        const code = screening.error?.code;
+        if (code === "catalog_mismatch") {
+          return "The programme information has been updated. Reload the page and check again.";
+        }
+        if (screening.error?.retryable) {
+          return "That did not get through just now. You can try again in a moment.";
+        }
+        return "Something in the answers could not be checked. Please look them over again.";
+      }
+      default:
+        return null;
+    }
+  })();
 
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-6 py-12">
@@ -407,14 +448,16 @@ function Review() {
       <div className="mt-8 flex flex-wrap gap-3">
         <button
           type="button"
-          onClick={confirmAndProject}
-          className="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-medium"
+          onClick={confirmAndScreen}
+          disabled={screening.stage === "submitting"}
+          className="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-medium disabled:opacity-60"
         >
-          These answers are right
+          {screening.stage === "submitting" ? "Checking\u2026" : "These answers are right"}
         </button>
         <button
           type="button"
           onClick={() => {
+            orchestrator.reset();
             dispatch({ type: "reset" });
             setNote(null);
           }}
@@ -426,6 +469,11 @@ function Review() {
       {note && (
         <p aria-live="polite" className="mt-4 text-sm">
           {note}
+        </p>
+      )}
+      {screeningMessage && (
+        <p aria-live="polite" className="mt-2 text-sm font-medium" data-testid="screening-stage">
+          {screeningMessage}
         </p>
       )}
     </main>
