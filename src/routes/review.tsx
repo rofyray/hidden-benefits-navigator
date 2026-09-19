@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useReducer, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   COMMON_FIELDS,
   fieldsForGroups,
@@ -8,7 +8,18 @@ import {
   projectEvaluateRequest,
   reviewReducer,
   type FieldDescriptor,
+  type ReviewAction,
 } from "@/client/review";
+import {
+  answerCurrent,
+  initialClarifySession,
+  openNextQuestion,
+  questionById,
+  selectClarifications,
+  stopClarifying,
+  MAX_CLARIFY_TURNS,
+  type ClarifyAnswer,
+} from "@/client/clarify";
 import { selectGroups } from "@/client/extraction/extract";
 import type { MoneyInterval } from "@/shared/contracts";
 
@@ -45,8 +56,21 @@ function textToCents(text: string): number | null {
 }
 
 function Review() {
-  const [state, dispatch] = useReducer(reviewReducer, initialReviewState());
+  const [state, setState] = useState(initialReviewState());
+  const [session, setSession] = useState(initialClarifySession());
   const [note, setNote] = useState<string | null>(null);
+  const [draft, setDraft] = useState("");
+
+  const dispatch = (action: ReviewAction) =>
+    setState((previous) => reviewReducer(previous, action));
+
+  const currentQuestion = session.currentId ? questionById(session.currentId) : undefined;
+
+  const answer = (input: ClarifyAnswer) => {
+    const step = answerCurrent(state, session, input);
+    setState(step.review);
+    setSession(step.session);
+  };
 
   const fields = useMemo(
     () => fieldsForGroups(state.groupsAsked.length ? state.groupsAsked : selectGroups(state.facts)),
@@ -239,6 +263,145 @@ function Review() {
         <p className="text-muted-foreground mt-4 text-sm">
           {COMMON_FIELDS.length} shared questions, plus the ones each programme needs.
         </p>
+      </section>
+
+      <section aria-labelledby="followup-heading" className="mt-10">
+        <h2 id="followup-heading" className="text-xl font-semibold">
+          A few quick questions
+        </h2>
+        {!session.currentId && !session.done && (
+          <>
+            <p className="text-muted-foreground mt-2 text-sm">
+              {selectClarifications(state).length > 0
+                ? "Answering up to three short questions can make the results clearer. You can skip any of them."
+                : "Nothing else needs asking right now."}
+            </p>
+            {selectClarifications(state).length > 0 && (
+              <button
+                type="button"
+                onClick={() => setSession(openNextQuestion(state, session))}
+                className="border-border mt-3 rounded-md border px-4 py-2 text-sm font-medium"
+              >
+                Answer a few questions
+              </button>
+            )}
+          </>
+        )}
+
+        {currentQuestion && (
+          <div className="border-border mt-4 rounded-lg border p-4">
+            <p className="font-medium">{currentQuestion.text}</p>
+            {currentQuestion.help && (
+              <p className="text-muted-foreground mt-1 text-sm">{currentQuestion.help}</p>
+            )}
+            <p className="text-muted-foreground mt-1 text-xs">
+              Question {session.turn + 1} of up to {MAX_CLARIFY_TURNS}
+            </p>
+
+            {currentQuestion.options ? (
+              session.showOptions || currentQuestion.options.length <= 4 ? (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {currentQuestion.options
+                    .filter((option) => option.value !== "")
+                    .map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => answer({ type: "value", value: option.value })}
+                        className="border-border rounded-md border px-3 py-2 text-sm"
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => answer({ type: "showOptions" })}
+                  className="border-border mt-3 rounded-md border px-3 py-2 text-sm"
+                >
+                  Show the options
+                </button>
+              )
+            ) : (
+              <form
+                className="mt-3 flex flex-wrap items-center gap-2"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  const raw = draft.trim();
+                  if (raw === "") return;
+                  const numeric = Number(raw);
+                  if (!Number.isFinite(numeric)) return;
+                  const value =
+                    currentQuestion.kind === "money"
+                      ? { minCents: Math.round(numeric * 100), maxCents: null }
+                      : currentQuestion.kind === "income"
+                        ? {
+                            interval: { minCents: Math.round(numeric * 100), maxCents: null },
+                            period: "monthly",
+                            basis: "unknown",
+                          }
+                        : Math.round(numeric);
+                  answer({ type: "value", value });
+                  setDraft("");
+                }}
+              >
+                <input
+                  aria-label={currentQuestion.text}
+                  type="number"
+                  inputMode="decimal"
+                  value={draft}
+                  onChange={(event) => setDraft(event.target.value)}
+                  className="border-border w-32 rounded-md border px-3 py-2"
+                />
+                <button
+                  type="submit"
+                  className="bg-primary text-primary-foreground rounded-md px-3 py-2 text-sm font-medium"
+                >
+                  Answer
+                </button>
+              </form>
+            )}
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => answer({ type: "unknown" })}
+                className="border-border rounded-md border px-3 py-2 text-sm"
+              >
+                Not sure
+              </button>
+              <button
+                type="button"
+                onClick={() => answer({ type: "skip" })}
+                className="border-border rounded-md border px-3 py-2 text-sm"
+              >
+                Skip this
+              </button>
+              <button
+                type="button"
+                onClick={() => setSession(stopClarifying(session))}
+                className="border-border rounded-md border px-3 py-2 text-sm"
+              >
+                Stop the questions
+              </button>
+            </div>
+
+            {session.rejectedId === currentQuestion.id && (
+              <p aria-live="polite" className="mt-3 text-sm font-medium">
+                That answer is outside what this form accepts, so your previous answer was kept.
+              </p>
+            )}
+          </div>
+        )}
+
+        {session.done && (
+          <p aria-live="polite" className="mt-3 text-sm">
+            {session.needsReevaluation
+              ? "Thanks — your answers changed, so the results would be worked out again."
+              : "Thanks — the results would be shown as they stand."}
+          </p>
+        )}
       </section>
 
       <div className="mt-8 flex flex-wrap gap-3">

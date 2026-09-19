@@ -1,7 +1,7 @@
 # Progress
 
-Last completed: **P2-03 — Fact review and manual entry** (2026-09-19)
-Current task: **P2-04** — not started
+Last completed: **P2-04 — One-question clarification** (2026-09-19)
+Current task: **P2-05** — not started
 
 
 ## Completed
@@ -28,6 +28,7 @@ Current task: **P2-04** — not started
 | P2-01 Local model adapter | docs/evidence/P2-01.md |
 | P2-02 Structured extraction | docs/evidence/P2-02.md |
 | P2-03 Fact review and manual entry | docs/evidence/P2-03.md |
+| P2-04 One-question clarification | docs/evidence/P2-04.md |
 
 ## Open blockers
 

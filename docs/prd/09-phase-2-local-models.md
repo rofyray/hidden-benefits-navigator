@@ -86,7 +86,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P2-04 — Implement one-question clarification
 
-- [ ] **P2-04: Implement one-question clarification**
+- [x] **P2-04: Implement one-question clarification**
 
 **Depends on:** P2-03.
 
@@ -96,15 +96,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Use code-selected missing field IDs to choose authored plain questions.
+- [x] Use code-selected missing field IDs to choose authored plain questions.
 
-- [ ] Support typed/button answers, unknown, skip and show-options actions; preserve confirmed facts.
+- [x] Support typed/button answers, unknown, skip and show-options actions; preserve confirmed facts.
 
-- [ ] Re-evaluate only after meaningful changes; stop asking after three optional turns.
+- [x] Re-evaluate only after meaningful changes; stop asking after three optional turns.
 
 **Acceptance:**
 
-- [ ] One question is shown at a time and skipping never becomes a false answer or a loop
+- [x] One question is shown at a time and skipping never becomes a false answer or a loop
 
 **Verify:** Missing-field, repeated-answer, skip and turn-cap unit/component tests.
 
