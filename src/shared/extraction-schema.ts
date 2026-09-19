@@ -5,7 +5,16 @@
  */
 
 import { z } from "zod";
-import { factsSchema, programExtensionsSchema } from "./contracts";
+import {
+  ceapExtensionSchema,
+  eitcExtensionSchema,
+  factsSchema,
+  lifelineExtensionSchema,
+  medicareExtensionSchema,
+  programExtensionsSchema,
+  snapExtensionSchema,
+  wicExtensionSchema,
+} from "./contracts";
 
 export type JsonSchema = Record<string, unknown>;
 
@@ -94,3 +103,54 @@ export const extractionJsonSchema: JsonSchema = {
   required: ["facts", "extensions"],
   additionalProperties: false,
 };
+
+/* ----------------------------------------- bounded per-group extraction */
+
+/**
+ * Extraction happens in bounded passes: the common facts first, then only the
+ * program groups a person's stated situation could actually need. Splitting the
+ * schema keeps each prompt and each constrained answer small, and it means a
+ * group that was never asked about stays at its explicit unknown defaults
+ * instead of being filled in by a model that had no evidence for it.
+ */
+export type ExtractionGroup = "snap" | "eitc" | "ceap" | "medicare" | "wic" | "lifeline";
+
+export const EXTRACTION_GROUPS: readonly ExtractionGroup[] = [
+  "snap",
+  "eitc",
+  "ceap",
+  "medicare",
+  "wic",
+  "lifeline",
+] as const;
+
+export const extensionZodByGroup: Readonly<Record<ExtractionGroup, z.ZodTypeAny>> = {
+  snap: snapExtensionSchema,
+  eitc: eitcExtensionSchema,
+  ceap: ceapExtensionSchema,
+  medicare: medicareExtensionSchema,
+  wic: wicExtensionSchema,
+  lifeline: lifelineExtensionSchema,
+};
+
+/** What the model may propose for the common facts, on its own. */
+export const commonFactsJsonSchema: JsonSchema = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  title: "Proposed common household facts",
+  type: "object",
+  properties: { facts: toJsonSchema(factsSchema) },
+  required: ["facts"],
+  additionalProperties: false,
+};
+
+/** What the model may propose for one program group, on its own. */
+export function groupJsonSchema(group: ExtractionGroup): JsonSchema {
+  return {
+    $schema: "https://json-schema.org/draft/2020-12/schema",
+    title: `Proposed ${group} details`,
+    type: "object",
+    properties: { [group]: toJsonSchema(extensionZodByGroup[group]) },
+    required: [group],
+    additionalProperties: false,
+  };
+}

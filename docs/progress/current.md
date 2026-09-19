@@ -1,7 +1,7 @@
 # Progress
 
-Last completed: **P2-01 — Local model adapter** (2026-09-19)
-Current task: **P2-02** — not started
+Last completed: **P2-02 — Structured extraction** (2026-09-19)
+Current task: **P2-03** — not started
 
 
 ## Completed
@@ -26,6 +26,7 @@ Current task: **P2-02** — not started
 | P1-16 Labeled policy evaluation | docs/evidence/P1-16.md |
 | P1-17 Data and backend phase gate | docs/evidence/P1-17.md |
 | P2-01 Local model adapter | docs/evidence/P2-01.md |
+| P2-02 Structured extraction | docs/evidence/P2-02.md |
 
 ## Open blockers
 

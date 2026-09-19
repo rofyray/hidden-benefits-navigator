@@ -34,7 +34,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P2-02 — Implement complete structured extraction
 
-- [ ] **P2-02: Implement complete structured extraction**
+- [x] **P2-02: Implement complete structured extraction**
 
 **Depends on:** P2-01.
 
@@ -44,15 +44,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Derive schemas from runtime contracts, including all null/unknown values and bounded extensions.
+- [x] Derive schemas from runtime contracts, including all null/unknown values and bounded extensions.
 
-- [ ] Extract common facts first and only relevant program extensions; preserve ambiguity and reject identifiers.
+- [x] Extract common facts first and only relevant program extensions; preserve ambiguity and reject identifiers.
 
-- [ ] Bound input/output, validate parsed content, retry once if appropriate, and expose manual fallback.
+- [x] Bound input/output, validate parsed content, retry once if appropriate, and expose manual fallback.
 
 **Acceptance:**
 
-- [ ] Every program receives the fields it needs or explicit unknowns; a schema-shaped hallucination is never auto-confirmed
+- [x] Every program receives the fields it needs or explicit unknowns; a schema-shaped hallucination is never auto-confirmed
 
 **Verify:** Labeled extraction fixtures including negation, ambiguous amounts, time periods and injection.
 
