@@ -75,8 +75,11 @@ function build(
  *   resources), which is its own "possibly" blocker.
  *
  * Both are the policy working as documented, so the authored labels below say
- * "possibly". Where the outcome is instead a recorded defect, the authored
- * label is left as the correct answer and tagged with `knownDefect`.
+ * "possibly": a stale-evidence or missing-fact blocker is resolved before the
+ * model signal is read, so a low-confidence or negative model reply on one of
+ * those programs still reads "possibly", never "Not a clear match". The two
+ * defects recorded in P1-16 (D1 exclusion polarity, D2 Medicare parallel
+ * pathways) are fixed as of P1-17, so no row carries a `knownDefect` tag.
  */
 export const devLabelCases: readonly LabelEvalCase[] = [
   ...build("snap", snapCases, [
@@ -104,15 +107,15 @@ export const devLabelCases: readonly LabelEvalCase[] = [
     [3, MIDDLING, "notAClearMatch"],
   ]),
   ...build("medicare_help", medicareCases, [
-    [0, SUPPORTIVE, "possibly", "D2.medicare_parallel_pathways"],
-    [1, CONFIDENT_NEGATIVE, "possibly", "D2.medicare_parallel_pathways"],
-    [2, LOW_CONFIDENCE, "possibly", "D2.medicare_parallel_pathways"],
+    [0, SUPPORTIVE, "possibly"],
+    [1, CONFIDENT_NEGATIVE, "possibly"],
+    [2, LOW_CONFIDENCE, "possibly"],
     [3, MIDDLING, "notAClearMatch"],
   ]),
   ...build("lifeline", lifelineCases, [
-    [0, SUPPORTIVE, "possibly", "D1.exclusion_rule_polarity"],
-    [1, CONFIDENT_NEGATIVE, "possibly", "D1.exclusion_rule_polarity"],
-    [2, LOW_CONFIDENCE, "notAClearMatch"],
-    [3, MIDDLING, "notAClearMatch"],
+    [0, SUPPORTIVE, "possibly"],
+    [1, CONFIDENT_NEGATIVE, "possibly"],
+    [2, LOW_CONFIDENCE, "possibly"],
+    [3, MIDDLING, "possibly"],
   ]),
 ];

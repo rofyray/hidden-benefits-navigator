@@ -429,7 +429,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-17 — Pass the data and backend phase gate
 
-- [ ] **P1-17: Pass the data and backend phase gate**
+- [x] **P1-17: Pass the data and backend phase gate**
 
 **Depends on:** P1-16.
 

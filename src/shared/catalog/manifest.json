@@ -1,6 +1,6 @@
 {
-  "catalogVersion": "1.0.0",
-  "rulesVersion": "1.0.0",
+  "catalogVersion": "1.1.0",
+  "rulesVersion": "1.1.0",
   "builtOn": "2026-09-19",
   "programs": [
     {
@@ -20,8 +20,8 @@
     },
     {
       "id": "medicare_help",
-      "version": "0.1.0",
-      "contentHash": "96ea23ac3f8dc6cbbeddf1d036cc70c1f65c387da048360392c9ee67a3b56871"
+      "version": "0.2.0",
+      "contentHash": "faa29cde52eadff3191fcddcca03aaeb853142ef346ebc25a403f85d5edcaa48"
     },
     {
       "id": "wic",

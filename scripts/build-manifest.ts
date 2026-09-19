@@ -14,8 +14,8 @@ import { programSchema, type Manifest } from "../src/shared/catalog-schema";
 const ROOT = join(process.cwd(), "src/shared/catalog");
 const PROGRAM_IDS = ["snap", "eitc", "ceap", "medicare_help", "wic", "lifeline"] as const;
 
-const CATALOG_VERSION = process.env["CATALOG_VERSION"] ?? "1.0.0";
-const RULES_VERSION = "1.0.0";
+const CATALOG_VERSION = process.env["CATALOG_VERSION"] ?? "1.1.0";
+const RULES_VERSION = "1.1.0";
 
 const programs = PROGRAM_IDS.map((id) => {
   const raw = readFileSync(join(ROOT, "programs", `${id}.json`), "utf8");

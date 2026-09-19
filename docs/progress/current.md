@@ -1,7 +1,7 @@
 # Progress
 
-Last completed: **P1-16 — Evaluate Jev policy on labeled synthetic cases** (2026-09-19)
-Current task: **P1-17** — not started
+Last completed: **P1-17 — Data and backend phase gate** (2026-09-19)
+Current task: **P2-01** — not started
 
 
 ## Completed
@@ -24,18 +24,10 @@ Current task: **P1-17** — not started
 | P1-14 Thin evaluation route | docs/evidence/P1-14.md |
 | P1-15 Explanation and checklist verification | docs/evidence/P1-15.md |
 | P1-16 Labeled policy evaluation | docs/evidence/P1-16.md |
+| P1-17 Data and backend phase gate | docs/evidence/P1-17.md |
 
 ## Open blockers
 
-- **D1 (screening, from P1-16): exclusion-effect rule polarity is inverted.**
-  `rule.lifeline.one_per_household` excludes the wrong people: someone who already
-  has Lifeline is not excluded, and someone who does not is. It is the only
-  `effect: "exclusion"` rule in the catalog. Repro and fix direction in
-  docs/evidence/P1-16.md.
-- **D2 (Medicare data, from P1-16): parallel individual/couple pathways read as
-  exclusions.** Every single applicant is shown "Not a clear match" for Medicare
-  cost help because they fail the couple composite. Needs `any` wrappers around
-  each individual/couple pair in the Medicare catalog. See docs/evidence/P1-16.md.
 - **Live synthetic evaluation has not been run** (`bun run test:eval --live`): it
   needs the configured provider and the hosted `EVALUATION_TOKEN_SECRET`. Recorded
   release blocker per the release plan.

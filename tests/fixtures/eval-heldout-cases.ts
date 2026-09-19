@@ -74,11 +74,11 @@ export const heldOutLabelCases: readonly LabelEvalCase[] = [
     [5, CONFIDENT_NEGATIVE, "possibly"],
   ]),
   ...build("medicare_help", medicareCases, [
-    [4, SUPPORTIVE, "possibly", "D2.medicare_parallel_pathways"],
-    [5, CONFIDENT_NEGATIVE, "notAClearMatch"],
+    [4, SUPPORTIVE, "possibly"],
+    [5, CONFIDENT_NEGATIVE, "possibly"],
   ]),
   ...build("lifeline", lifelineCases, [
-    [4, SUPPORTIVE, "notAClearMatch", "D1.exclusion_rule_polarity"],
+    [4, SUPPORTIVE, "notAClearMatch"],
     [5, CONFIDENT_NEGATIVE, "possibly"],
   ]),
 ];

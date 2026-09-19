@@ -22,7 +22,7 @@ import {
   type ThresholdPeriod,
 } from "./normalization";
 
-export const RULES_VERSION = "1.0.0";
+export const RULES_VERSION = "1.1.0";
 
 export type Status = CriterionResult["status"];
 
@@ -304,6 +304,20 @@ function evaluateRule(ruleId: string, ctx: EvalContext): CriterionResult {
     case "referral":
       criterion = result(rule, "notApplicable", rule.operands.reasonCode, ctx);
       break;
+  }
+
+  // An `exclusion` rule states the disqualifying condition, so its predicate
+  // outcome is inverted before it is reported: the condition being met is a
+  // `fail` (the person is excluded), and not being met is a `pass`. An unknown
+  // stays unknown. Without this, the criterion would read backwards.
+  if (rule.effect === "exclusion" && (criterion.status === "pass" || criterion.status === "fail")) {
+    const excluded = criterion.status === "pass";
+    criterion = result(
+      rule,
+      excluded ? "fail" : "pass",
+      excluded ? "exclusion_applies" : "exclusion_does_not_apply",
+      ctx,
+    );
   }
 
   // Exceptions can only soften a `fail`: a published limit is not an absolute

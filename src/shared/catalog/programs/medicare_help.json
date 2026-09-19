@@ -2,7 +2,7 @@
   "id": "medicare_help",
   "name": "Help with Medicare costs",
   "jurisdiction": "US",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "published",
   "validFrom": "2026-01-01",
   "validTo": "2026-12-31",
@@ -459,6 +459,155 @@
         "currency": "USD",
         "period": "annual",
         "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.extra_help_automatic"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qmb",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_qmb"],
+      "operator": "any",
+      "operands": {
+        "ruleIds": ["rule.medicare.msp_qmb_ind", "rule.medicare.msp_qmb_couple"]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_slmb_ind",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_slmb"],
+      "operator": "all",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.msp_individual",
+          "rule.medicare.msp_slmb_income_ind",
+          "rule.medicare.msp_resources_ind"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_slmb_couple",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_slmb"],
+      "operator": "all",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.msp_couple",
+          "rule.medicare.msp_slmb_income_couple",
+          "rule.medicare.msp_resources_couple"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_slmb",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_slmb"],
+      "operator": "any",
+      "operands": {
+        "ruleIds": ["rule.medicare.msp_slmb_ind", "rule.medicare.msp_slmb_couple"]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qi_ind",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_qi"],
+      "operator": "all",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.msp_individual",
+          "rule.medicare.msp_qi_income_ind",
+          "rule.medicare.msp_resources_ind",
+          "rule.medicare.msp_qi_other_medicaid"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qi_couple",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_qi"],
+      "operator": "all",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.msp_couple",
+          "rule.medicare.msp_qi_income_couple",
+          "rule.medicare.msp_resources_couple",
+          "rule.medicare.msp_qi_other_medicaid"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qi",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_qi"],
+      "operator": "any",
+      "operands": {
+        "ruleIds": ["rule.medicare.msp_qi_ind", "rule.medicare.msp_qi_couple"]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.extra_help_financial_ind",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.extra_help_limits"],
+      "operator": "all",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.msp_individual",
+          "rule.medicare.extra_help_income_ind",
+          "rule.medicare.extra_help_resources_ind"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.extra_help_automatic"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.extra_help_financial_couple",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.extra_help_limits"],
+      "operator": "all",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.msp_couple",
+          "rule.medicare.extra_help_income_couple",
+          "rule.medicare.extra_help_resources_couple"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.extra_help_automatic"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.extra_help_financial",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.extra_help_limits"],
+      "operator": "any",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.extra_help_financial_ind",
+          "rule.medicare.extra_help_financial_couple"
+        ]
       },
       "effect": "screening",
       "exceptionRuleIds": ["rule.medicare.extra_help_automatic"],
