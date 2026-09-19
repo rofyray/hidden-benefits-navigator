@@ -1,7 +1,7 @@
 # Progress
 
-Last completed: **P2-05 — Connect evaluation with revision-safe orchestration** (2026-09-19)
-Current task: **P2-06** — not started
+Last completed: **P2-06 — Compose grounded explanations and checklist drafts** (2026-09-19)
+Current task: **P2-07** — not started
 
 
 ## Completed
@@ -30,6 +30,7 @@ Current task: **P2-06** — not started
 | P2-03 Fact review and manual entry | docs/evidence/P2-03.md |
 | P2-04 One-question clarification | docs/evidence/P2-04.md |
 | P2-05 Evaluation orchestration | docs/evidence/P2-05.md |
+| P2-06 Grounded draft composition | docs/evidence/P2-06.md |
 
 ## Open blockers
 

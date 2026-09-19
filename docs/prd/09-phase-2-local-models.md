@@ -138,7 +138,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P2-06 — Compose grounded explanations and checklist drafts
 
-- [ ] **P2-06: Compose grounded explanations and checklist drafts**
+- [x] **P2-06: Compose grounded explanations and checklist drafts**
 
 **Depends on:** P2-05.
 
@@ -148,15 +148,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Build per-card minimal evidence snapshots from selected reasons and curated action choices.
+- [x] Build per-card minimal evidence snapshots from selected reasons and curated action choices.
 
-- [ ] Generate short sentences and checklist wording using allowed IDs and qualifiers.
+- [x] Generate short sentences and checklist wording using allowed IDs and qualifiers.
 
-- [ ] Bound local concurrency/time, reject unexpected identifiers/URLs, and select curated fallback for invalid generation.
+- [x] Bound local concurrency/time, reject unexpected identifiers/URLs, and select curated fallback for invalid generation.
 
 **Acceptance:**
 
-- [ ] The intake session/history cannot contaminate generation; each draft element carries valid evidence IDs
+- [x] The intake session/history cannot contaminate generation; each draft element carries valid evidence IDs
 
 **Verify:** Prompt assembly, schema bounds, contaminated generation and timeout tests.
 
