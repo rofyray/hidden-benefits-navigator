@@ -19,7 +19,8 @@
     "test:e2e": "bun scripts/not-configured.ts test:e2e P3-09",
     "test:full": "bun scripts/not-configured.ts test:full P3-10",
     "test:eval": "bun scripts/not-configured.ts test:eval P1-16",
-    "data:validate": "bun scripts/not-configured.ts data:validate P1-03",
+    "data:manifest": "bun scripts/build-manifest.ts",
+    "data:validate": "bun scripts/validate-catalog.ts",
     "data:links": "bun scripts/not-configured.ts data:links P1-17"
   },
   "overrides": {

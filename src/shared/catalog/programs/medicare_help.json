@@ -1,0 +1,536 @@
+{
+  "id": "medicare_help",
+  "name": "Help with Medicare costs",
+  "jurisdiction": "US",
+  "version": "0.1.0",
+  "status": "published",
+  "validFrom": "2026-01-01",
+  "validTo": "2026-12-31",
+  "reviewDueOn": "2026-12-01",
+  "coverage": "One card covering two separate pathways: Medicare Savings Programs (MSP), which are state-run and help with Part A and Part B costs, and Extra Help, which is federal and helps with Part D drug costs. The two pathways keep separate evidence, separate limits and separate results; neither is ever used to justify the other.",
+  "limitations": [
+    "MSP and Extra Help are different programs with different limits; a result for one says nothing about the other.",
+    "The federal limits shown are the floor: Texas may disregard some income or resources, so being over a limit is not a denial.",
+    "Which income and resources count is decided by the agency; if that is not confirmed, the check stays unknown.",
+    "The Texas MSP page could not be read, so no Texas-specific rule or document list is claimed.",
+    "QDWI, working-disability and other special pathways are referred for help rather than scored."
+  ],
+  "eligibilitySummary": [
+    "Medicare Savings Programs are run by Texas and can pay Part A and Part B premiums, and sometimes deductibles and copayments.",
+    "Extra Help is run by Social Security and lowers what you pay for prescription drugs under Part D.",
+    "Some people get Extra Help automatically, including people with full Medicaid, an MSP, or SSI.",
+    "Each program decides separately, and states can count income and resources differently than the federal limits."
+  ],
+  "evidence": [
+    {
+      "id": "ev.medicare.msp_qmb",
+      "text": "For 2026 the QMB program lists a monthly income limit of $1,350 and a resource limit of $9,950 for an individual, and $1,824 and $14,910 for a married couple. QMB helps with Part A and Part B premiums, deductibles, coinsurance and copayments.",
+      "sourceIds": ["src.medicare.msp"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.medicare.msp_slmb",
+      "text": "For 2026 the SLMB program lists a monthly income limit of $1,616 for an individual and $2,184 for a married couple, with the same $9,950 and $14,910 resource limits. SLMB helps with Part B premiums only and requires having both Part A and Part B.",
+      "sourceIds": ["src.medicare.msp"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.medicare.msp_qi",
+      "text": "For 2026 the QI program lists a monthly income limit of $1,816 for an individual and $2,455 for a married couple, with the same resource limits. QI must be applied for every year, is approved first come first served, and is only for people who do not qualify for other Medicaid coverage.",
+      "sourceIds": ["src.medicare.msp"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.medicare.msp_qdwi",
+      "text": "The QDWI program is for people who have a disability, are working, and lost Social Security disability benefits and premium-free Part A after returning to work; for 2026 it lists a monthly income limit of $5,405 for an individual and $7,299 for a couple, with resource limits of $4,000 and $6,000.",
+      "sourceIds": ["src.medicare.msp"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.medicare.msp_state_variation",
+      "text": "Medicare states that people may still qualify in their state even if income or resources are higher than the federal limits listed, because some states do not count certain types or amounts of income or resources, and advises applying even if you do not think you qualify.",
+      "sourceIds": ["src.medicare.msp"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.medicare.msp_apply",
+      "text": "Medicare Savings Programs are run by the state and applications are made to the state, which determines which program or programs a person qualifies for.",
+      "sourceIds": ["src.medicare.msp"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.medicare.extra_help_limits",
+      "text": "For 2026 Extra Help lists an income limit of $23,940 and a resource limit of $18,090 for an individual, and $32,460 and $36,100 for a married couple. These are annual income figures, not monthly.",
+      "sourceIds": ["src.medicare.extra_help"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.medicare.extra_help_automatic",
+      "text": "Extra Help is automatic for people who have full-benefit Medicaid coverage, who get help from their state paying Part B premiums through a Medicare Savings Program, or who get Supplemental Security Income.",
+      "sourceIds": ["src.medicare.extra_help"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.medicare.extra_help_calendar",
+      "text": "Extra Help runs on the calendar year: once qualified, a person keeps Extra Help through December 31 even if income changes mid-year.",
+      "sourceIds": ["src.medicare.extra_help"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.medicare.extra_help_apply",
+      "text": "People who do not get Extra Help automatically can apply through Social Security, and a State Health Insurance Assistance Program offers free help applying; an Extra Help application also starts a Medicare Savings Program application with the state unless the applicant declines.",
+      "sourceIds": ["src.medicare.extra_help", "src.medicare.ssa_apply"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.medicare.texas_unreviewed",
+      "text": "The Texas Health and Human Services page for Medicare Savings Programs returned HTTP 403 on September 19, 2026, so no Texas-specific rule, document list or local office is claimed here.",
+      "sourceIds": ["src.medicare.texas_msp"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.medicare.enrollment",
+      "text": "Both pathways concern people who have Medicare; age by itself does not establish Medicare enrollment, which is a separate fact.",
+      "sourceIds": ["src.medicare.msp", "src.medicare.extra_help"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.medicare.documents",
+      "text": "Because the state decides which income and resources count and the Texas page could not be reviewed, the agency is the right place to confirm what to bring.",
+      "sourceIds": ["src.medicare.msp", "src.medicare.texas_msp"],
+      "kind": "document"
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.medicare.enrolled",
+      "fieldIds": ["medicarePartA", "medicare.partBID"],
+      "evidenceIds": ["ev.medicare.enrollment"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "medicarePartA", "values": ["yes", "unknown"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_basis_confirmed",
+      "fieldIds": ["medicare.countableBasisConfirmed"],
+      "evidenceIds": ["ev.medicare.msp_state_variation"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "medicare.countableBasisConfirmed", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_individual",
+      "fieldIds": ["medicare.category"],
+      "evidenceIds": ["ev.medicare.msp_qmb"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "medicare.category", "values": ["individual"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_couple",
+      "fieldIds": ["medicare.category"],
+      "evidenceIds": ["ev.medicare.msp_qmb"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "medicare.category", "values": ["couple"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qmb_income_ind",
+      "fieldIds": ["medicare.countableMonthly"],
+      "evidenceIds": ["ev.medicare.msp_qmb"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.countableMonthly",
+        "amountCents": 135000,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.msp_state_variation_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qmb_income_couple",
+      "fieldIds": ["medicare.countableMonthly"],
+      "evidenceIds": ["ev.medicare.msp_qmb"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.countableMonthly",
+        "amountCents": 182400,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.msp_state_variation_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qmb_ind",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_qmb"],
+      "operator": "all",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.msp_individual",
+          "rule.medicare.msp_qmb_income_ind",
+          "rule.medicare.msp_resources_ind"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qmb_couple",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_qmb"],
+      "operator": "all",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.msp_couple",
+          "rule.medicare.msp_qmb_income_couple",
+          "rule.medicare.msp_resources_couple"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_slmb_income_ind",
+      "fieldIds": ["medicare.countableMonthly"],
+      "evidenceIds": ["ev.medicare.msp_slmb"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.countableMonthly",
+        "amountCents": 161600,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.msp_state_variation_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_slmb_income_couple",
+      "fieldIds": ["medicare.countableMonthly"],
+      "evidenceIds": ["ev.medicare.msp_slmb"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.countableMonthly",
+        "amountCents": 218400,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.msp_state_variation_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qi_income_ind",
+      "fieldIds": ["medicare.countableMonthly"],
+      "evidenceIds": ["ev.medicare.msp_qi"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.countableMonthly",
+        "amountCents": 181600,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.msp_state_variation_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qi_income_couple",
+      "fieldIds": ["medicare.countableMonthly"],
+      "evidenceIds": ["ev.medicare.msp_qi"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.countableMonthly",
+        "amountCents": 245500,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.msp_state_variation_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_qi_other_medicaid",
+      "fieldIds": ["medicare.receivesOtherMedicaid"],
+      "evidenceIds": ["ev.medicare.msp_qi"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "medicare.receivesOtherMedicaid", "values": ["no", "unknown"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.medicare.msp_resources_ind",
+      "fieldIds": ["medicare.countableResources"],
+      "evidenceIds": ["ev.medicare.msp_qmb", "ev.medicare.msp_state_variation"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.countableResources",
+        "amountCents": 995000,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.msp_state_variation_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_resources_couple",
+      "fieldIds": ["medicare.countableResources"],
+      "evidenceIds": ["ev.medicare.msp_qmb", "ev.medicare.msp_state_variation"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.countableResources",
+        "amountCents": 1491000,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.msp_state_variation_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.msp_state_variation_referral",
+      "fieldIds": [],
+      "evidenceIds": ["ev.medicare.msp_state_variation", "ev.medicare.texas_unreviewed"],
+      "operator": "referral",
+      "operands": { "reasonCode": "state_may_disregard_income_or_resources" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.medicare.msp_qdwi_referral",
+      "fieldIds": ["medicare.specialPathwayReviewNeeded"],
+      "evidenceIds": ["ev.medicare.msp_qdwi"],
+      "operator": "referral",
+      "operands": { "reasonCode": "qdwi_working_disability_pathway" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.medicare.extra_help_automatic",
+      "fieldIds": ["medicare.receivesFullMedicaid", "medicare.receivesMsp", "receivesSsi"],
+      "evidenceIds": ["ev.medicare.extra_help_automatic"],
+      "operator": "any",
+      "operands": {
+        "ruleIds": [
+          "rule.medicare.extra_help_full_medicaid",
+          "rule.medicare.extra_help_has_msp",
+          "rule.medicare.extra_help_ssi"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.medicare.extra_help_full_medicaid",
+      "fieldIds": ["medicare.receivesFullMedicaid"],
+      "evidenceIds": ["ev.medicare.extra_help_automatic"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "medicare.receivesFullMedicaid", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.medicare.extra_help_has_msp",
+      "fieldIds": ["medicare.receivesMsp"],
+      "evidenceIds": ["ev.medicare.extra_help_automatic"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "medicare.receivesMsp", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.medicare.extra_help_ssi",
+      "fieldIds": ["receivesSsi"],
+      "evidenceIds": ["ev.medicare.extra_help_automatic"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "receivesSsi", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.medicare.extra_help_basis_confirmed",
+      "fieldIds": ["medicare.extraHelpBasisConfirmed"],
+      "evidenceIds": ["ev.medicare.extra_help_limits"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "medicare.extraHelpBasisConfirmed", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.extra_help_automatic"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.extra_help_income_ind",
+      "fieldIds": ["medicare.extraHelpAnnualIncome"],
+      "evidenceIds": ["ev.medicare.extra_help_limits"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.extraHelpAnnualIncome",
+        "amountCents": 2394000,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "annual",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.extra_help_automatic"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.extra_help_income_couple",
+      "fieldIds": ["medicare.extraHelpAnnualIncome"],
+      "evidenceIds": ["ev.medicare.extra_help_limits"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.extraHelpAnnualIncome",
+        "amountCents": 3246000,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "annual",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.extra_help_automatic"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.extra_help_resources_ind",
+      "fieldIds": ["medicare.extraHelpResources"],
+      "evidenceIds": ["ev.medicare.extra_help_limits"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.extraHelpResources",
+        "amountCents": 1809000,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "annual",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.extra_help_automatic"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.medicare.extra_help_resources_couple",
+      "fieldIds": ["medicare.extraHelpResources"],
+      "evidenceIds": ["ev.medicare.extra_help_limits"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "medicare.extraHelpResources",
+        "amountCents": 3610000,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "annual",
+        "basis": "countable"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.medicare.extra_help_automatic"],
+      "blocksLikelyWhenUnknown": true
+    }
+  ],
+  "requiredFieldIds": ["medicarePartA", "medicare.category"],
+  "optionalFieldIds": [
+    "ageBand",
+    "receivesSsi",
+    "receivesMedicaid",
+    "medicare.partBID",
+    "medicare.countableMonthly",
+    "medicare.countableResources",
+    "medicare.countableBasisConfirmed",
+    "medicare.receivesOtherMedicaid",
+    "medicare.receivesMsp",
+    "medicare.receivesFullMedicaid",
+    "medicare.extraHelpAnnualIncome",
+    "medicare.extraHelpResources",
+    "medicare.extraHelpBasisConfirmed",
+    "medicare.specialPathwayReviewNeeded"
+  ],
+  "value": {
+    "kind": "variable",
+    "text": "A Medicare Savings Program can pay Part B and sometimes Part A premiums and other costs; Extra Help lowers Part D drug costs. What each covers is decided separately.",
+    "evidenceIds": ["ev.medicare.msp_qmb", "ev.medicare.extra_help_limits"],
+    "period": "month"
+  },
+  "documents": [
+    {
+      "id": "doc.medicare.ask_state",
+      "label": "Ask the state what income and resources it counts; the federal limits are not the whole story.",
+      "whenRuleId": "rule.medicare.msp_basis_confirmed",
+      "requiredness": "askAgency",
+      "evidenceIds": ["ev.medicare.documents", "ev.medicare.msp_state_variation"]
+    },
+    {
+      "id": "doc.medicare.card",
+      "label": "Your Medicare card or Medicare number.",
+      "whenRuleId": "rule.medicare.enrolled",
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.medicare.enrollment"]
+    },
+    {
+      "id": "doc.medicare.income_records",
+      "label": "Recent income records and a rough list of savings and other resources.",
+      "whenRuleId": null,
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.medicare.extra_help_limits", "ev.medicare.msp_qmb"]
+    }
+  ],
+  "application": [
+    {
+      "id": "app.medicare.msp",
+      "label": "Read how Medicare Savings Programs work and how to contact your state to apply.",
+      "url": "https://www.medicare.gov/basics/costs/help/medicare-savings-programs",
+      "evidenceIds": ["ev.medicare.msp_apply"]
+    },
+    {
+      "id": "app.medicare.extra_help",
+      "label": "Read about Extra Help with drug costs, including who gets it automatically.",
+      "url": "https://www.medicare.gov/basics/costs/help/drug-costs",
+      "evidenceIds": ["ev.medicare.extra_help_apply"]
+    },
+    {
+      "id": "app.medicare.ssa",
+      "label": "Apply for Extra Help through Social Security.",
+      "url": "https://www.ssa.gov/medicare/part-d-extra-help",
+      "evidenceIds": ["ev.medicare.extra_help_apply"]
+    }
+  ],
+  "fallbackExplanation": "Two separate kinds of help exist: a Medicare Savings Program through Texas for Part A and Part B costs, and Extra Help through Social Security for drug costs. A result for one does not decide the other, and the state can count income and resources differently than the federal limits, so applying is worthwhile even if a figure looks high.",
+  "fallbackChecklistIds": ["app.medicare.msp", "app.medicare.ssa", "doc.medicare.ask_state"]
+}

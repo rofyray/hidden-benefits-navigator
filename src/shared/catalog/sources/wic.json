@@ -1,0 +1,35 @@
+[
+  {
+    "id": "src.wic.apply",
+    "url": "https://texaswic.org/apply",
+    "publisher": "Texas Health and Human Services (Texas WIC)",
+    "title": "Apply for WIC",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Texas WIC income guidelines table, categorical eligibility through Medicaid/SNAP/TANF, category durations, application steps and FAQs (site footer states the site was last updated September 17, 2026; the table itself carries no effective period)",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.wic.office_locator",
+    "url": "https://office.texaswic.org/",
+    "publisher": "Texas Health and Human Services (Texas WIC)",
+    "title": "WIC Office Locator",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Official clinic finder linked from the Texas WIC application page",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.wic.fns_guidelines",
+    "url": "https://www.fns.usda.gov/wic/income-eligibility-guidelines",
+    "publisher": "USDA Food and Nutrition Service",
+    "title": "WIC income eligibility guidelines",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Federal table that would confirm the effective period of the state figures — could not be retrieved (HTTP 403 from a direct request and from a real browser session)",
+    "reviewStatus": "inaccessible"
+  }
+]

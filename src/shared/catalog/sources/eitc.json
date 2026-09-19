@@ -1,0 +1,57 @@
+[
+  {
+    "id": "src.eitc.tables",
+    "url": "https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit/earned-income-and-earned-income-tax-credit-eitc-tables",
+    "publisher": "Internal Revenue Service",
+    "title": "Earned Income Tax Credit (EITC) tables",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": "2025-01-01",
+    "effectiveTo": null,
+    "section": "Tax year 2025 AGI table, investment income limit and maximum credit amounts",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.eitc.who",
+    "url": "https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit/who-qualifies-for-the-earned-income-tax-credit-eitc",
+    "publisher": "Internal Revenue Service",
+    "title": "Who qualifies for the Earned Income Tax Credit (EITC)",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Basic qualifying rules, filing status, special qualifying rules, claiming the EITC without a qualifying child (page last reviewed 09-Feb-2026)",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.eitc.assistant",
+    "url": "https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit/use-the-eitc-assistant",
+    "publisher": "Internal Revenue Service",
+    "title": "Use the EITC Assistant",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Official self-check tool for the credit",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.eitc.vita",
+    "url": "https://www.irs.gov/individuals/free-tax-return-preparation-for-you-by-volunteers",
+    "publisher": "Internal Revenue Service",
+    "title": "Free tax return preparation for you by volunteers",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "VITA and TCE free preparation help",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.eitc.freefile",
+    "url": "https://www.irs.gov/e-file-do-your-taxes-for-free",
+    "publisher": "Internal Revenue Service",
+    "title": "E-file your taxes for free",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Free electronic filing options",
+    "reviewStatus": "verified"
+  }
+]

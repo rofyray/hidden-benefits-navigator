@@ -36,7 +36,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-02 — Run the device and provider preflight
 
-- [ ] **P1-02: Run the device and provider preflight**
+- [x] **P1-02: Run the device and provider preflight**
 
 **Depends on:** P1-01.
 
@@ -46,17 +46,17 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Probe Nano, local speech pack, microphone permission and local playback voice separately; record actual origin/profile/browser and outcomes.
+- [x] Probe Nano, local speech pack, microphone permission and local playback voice separately; record actual origin/profile/browser and outcomes.
 
-- [ ] Offer user-triggered downloads and confirm available status or record a reproducible unsupported state.
+- [x] Offer user-triggered downloads and confirm available status or record a reproducible unsupported state.
 
-- [ ] Run one tiny synthetic Jev request from the server when a configured credential is available; record returned model and outcome without payload/key.
+- [x] Run one tiny synthetic Jev request from the server when a configured credential is available; record returned model and outcome without payload/key.
 
-- [ ] Select the supported local/manual/cloud capability plan; do not spend indefinite time on browser flags.
+- [x] Select the supported local/manual/cloud capability plan; do not spend indefinite time on browser flags.
 
 **Acceptance:**
 
-- [ ] Each capability has a measured result or explicit external blocker; manual mode remains runnable. Live-claim blockers are carried to the final gate
+- [x] Each capability has a measured result or explicit external blocker; manual mode remains runnable. Live-claim blockers are carried to the final gate
 
 **Verify:** Manual probe plus mocked unavailable/downloading/denied states; no personal data required.
 
@@ -64,7 +64,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-03 — Define shared schemas and catalog validation
 
-- [ ] **P1-03: Define shared schemas and catalog validation**
+- [x] **P1-03: Define shared schemas and catalog validation**
 
 **Depends on:** P1-02.
 
@@ -74,15 +74,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Implement strict bounded schemas with null/unknown semantics; include need enum and every extension field listed in the data packets.
+- [x] Implement strict bounded schemas with null/unknown semantics; include need enum and every extension field listed in the data packets.
 
-- [ ] Implement rule operator unions and source/evidence/reference validation; use explicit versions and injected dates.
+- [x] Implement rule operator unions and source/evidence/reference validation; use explicit versions and injected dates.
 
-- [ ] Generate extraction JSON Schema and typed fixture builders from the contracts.
+- [x] Generate extraction JSON Schema and typed fixture builders from the contracts.
 
 **Acceptance:**
 
-- [ ] Invalid units, unknown keys, dangling/cyclic rules, impossible values and stale/version-mismatched records are rejected or explicitly marked unsupported
+- [x] Invalid units, unknown keys, dangling/cyclic rules, impossible values and stale/version-mismatched records are rejected or explicitly marked unsupported
 
 **Verify:** Targeted schema/catalog unit tests; boundary and unknown fixtures.
 
@@ -90,7 +90,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-04 — Curate and encode SNAP
 
-- [ ] **P1-04: Curate and encode SNAP**
+- [x] **P1-04: Curate and encode SNAP**
 
 **Depends on:** P1-03.
 
@@ -116,7 +116,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-05 — Curate and encode EITC
 
-- [ ] **P1-05: Curate and encode EITC**
+- [x] **P1-05: Curate and encode EITC**
 
 **Depends on:** P1-04.
 
@@ -142,7 +142,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-06 — Curate and encode CEAP/LIHEAP
 
-- [ ] **P1-06: Curate and encode CEAP/LIHEAP**
+- [x] **P1-06: Curate and encode CEAP/LIHEAP**
 
 **Depends on:** P1-05.
 
@@ -168,7 +168,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-07 — Curate Medicare cost-help pathways
 
-- [ ] **P1-07: Curate Medicare cost-help pathways**
+- [x] **P1-07: Curate Medicare cost-help pathways**
 
 **Depends on:** P1-06.
 
@@ -194,7 +194,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-08 — Curate and encode WIC
 
-- [ ] **P1-08: Curate and encode WIC**
+- [x] **P1-08: Curate and encode WIC**
 
 **Depends on:** P1-07.
 
@@ -220,7 +220,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-09 — Curate and encode Lifeline
 
-- [ ] **P1-09: Curate and encode Lifeline**
+- [x] **P1-09: Curate and encode Lifeline**
 
 **Depends on:** P1-08.
 
@@ -246,7 +246,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-10 — Build deterministic screening and normalization
 
-- [ ] **P1-10: Build deterministic screening and normalization**
+- [x] **P1-10: Build deterministic screening and normalization**
 
 **Depends on:** P1-09.
 
@@ -256,15 +256,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Implement interval conversions and comparisons without floating-point threshold drift.
+- [x] Implement interval conversions and comparisons without floating-point threshold drift.
 
-- [ ] Evaluate all/any/exception predicates with four-state logic; propagate missing facts and limitation reasons.
+- [x] Evaluate all/any/exception predicates with four-state logic; propagate missing facts and limitation reasons.
 
-- [ ] Expose required evidence and missing field IDs for both client fallback and server recomputation.
+- [x] Expose required evidence and missing field IDs for both client fallback and server recomputation.
 
 **Acceptance:**
 
-- [ ] Same facts/catalog/date produce the same statuses; unknowns never silently become false/zero; no arbitrary code evaluation
+- [x] Same facts/catalog/date produce the same statuses; unknowns never silently become false/zero; no arbitrary code evaluation
 
 **Verify:** All program fixtures plus unit tests for intervals, dates, exceptions and household definitions.
 
@@ -272,7 +272,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-11 — Implement the server Jev transport
 
-- [ ] **P1-11: Implement the server Jev transport**
+- [x] **P1-11: Implement the server Jev transport**
 
 **Depends on:** P1-10.
 
@@ -282,15 +282,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Adapt the supplied HTTP snippet to the project and enforce server-only import boundaries.
+- [x] Adapt the supplied HTTP snippet to the project and enforce server-only import boundaries.
 
-- [ ] Apply pinned model, total timeout, bounded backoff/Retry-After, response size cap and secret-safe diagnostics.
+- [x] Apply pinned model, total timeout, bounded backoff/Retry-After, response size cap and secret-safe diagnostics.
 
-- [ ] Add missing-key and provider-down fallback signals.
+- [x] Add missing-key and provider-down fallback signals.
 
 **Acceptance:**
 
-- [ ] No client request can choose endpoint/key/model or arbitrary questions; failed credentials do not cause repeated retries
+- [x] No client request can choose endpoint/key/model or arbitrary questions; failed credentials do not cause repeated retries
 
 **Verify:** Mock 200/401/422/429/529, invalid JSON, abort and timeout integration cases.
 
@@ -298,7 +298,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-12 — Implement evaluation questions and response validation
 
-- [ ] **P1-12: Implement evaluation questions and response validation**
+- [x] **P1-12: Implement evaluation questions and response validation**
 
 **Depends on:** P1-11.
 
@@ -308,15 +308,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Build match, relevance and bounded support questions for all six entries in one request.
+- [x] Build match, relevance and bounded support questions for all six entries in one request.
 
-- [ ] Pass only minimal confirmed facts and code-computed criteria; never the transcript.
+- [x] Pass only minimal confirmed facts and code-computed criteria; never the transcript.
 
-- [ ] Validate IDs, answer kinds, score ranges, probabilities and returned model; explicitly handle missing data.
+- [x] Validate IDs, answer kinds, score ranges, probabilities and returned model; explicitly handle missing data.
 
 **Acceptance:**
 
-- [ ] Normal six-program evaluation is one Jev call; high-confidence negative answers cannot be mistaken for positive matches
+- [x] Normal six-program evaluation is one Jev call; high-confidence negative answers cannot be mistaken for positive matches
 
 **Verify:** Question snapshot for synthetic state, answer-validation unit tests and one six-program mocked integration.
 
@@ -324,7 +324,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-13 — Implement labels, ranking and clarification selection
 
-- [ ] **P1-13: Implement labels, ranking and clarification selection**
+- [x] **P1-13: Implement labels, ranking and clarification selection**
 
 **Depends on:** P1-12.
 
@@ -334,15 +334,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Implement evidence/rule blockers before score/confidence gates; distinguish uncertainty from known exclusion.
+- [x] Implement evidence/rule blockers before score/confidence gates; distinguish uncertainty from known exclusion.
 
-- [ ] Sort by label and relevance with stable tie-breakers; do not sum unlike benefit values.
+- [x] Sort by label and relevance with stable tie-breakers; do not sum unlike benefit values.
 
-- [ ] Select missing material facts first, with uncertainty tie-breaks and a three-turn cap.
+- [x] Select missing material facts first, with uncertainty tie-breaks and a three-turn cap.
 
 **Acceptance:**
 
-- [ ] Uncertain or incomplete criteria cannot become Likely solely from model confidence; partial results always have a next action
+- [x] Uncertain or incomplete criteria cannot become Likely solely from model confidence; partial results always have a next action
 
 **Verify:** Boundary thresholds, contradictory outputs, tie order, skipped facts and max-turn unit tests.
 
@@ -350,7 +350,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P1-14 — Expose the thin evaluation route
 
-- [ ] **P1-14: Expose the thin evaluation route**
+- [x] **P1-14: Expose the thin evaluation route**
 
 **Depends on:** P1-13.
 
@@ -360,15 +360,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Validate allowlisted facts/IDs/catalog version and recompute rules on the server.
+- [x] Validate allowlisted facts/IDs/catalog version and recompute rules on the server.
 
-- [ ] Call one Jev batch or return labeled rules mode; issue minimal signed expiring evaluation snapshot.
+- [x] Call one Jev batch or return labeled rules mode; issue minimal signed expiring evaluation snapshot.
 
-- [ ] Implement revision echo, safe errors, rate/concurrency controls and content-free metrics.
+- [x] Implement revision echo, safe errors, rate/concurrency controls and content-free metrics.
 
 **Acceptance:**
 
-- [ ] Tampered client rules cannot override authoritative sources; limits and catalog mismatch are handled without secret/body leakage
+- [x] Tampered client rules cannot override authoritative sources; limits and catalog mismatch are handled without secret/body leakage
 
 **Verify:** Route integration tests for six programs, extra fields, oversized bodies, fallback and token integrity.
 

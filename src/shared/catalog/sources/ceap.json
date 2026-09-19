@@ -1,0 +1,46 @@
+[
+  {
+    "id": "src.ceap.tdhca_program",
+    "url": "https://www.tdhca.texas.gov/comprehensive-energy-assistance-program",
+    "publisher": "Texas Department of Housing and Community Affairs",
+    "title": "Comprehensive Energy Assistance Program (CEAP)",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Program overview and eligibility — could not be retrieved (HTTP 403 from both a direct request and a real browser session)",
+    "reviewStatus": "inaccessible"
+  },
+  {
+    "id": "src.ceap.tdhca_income",
+    "url": "https://www.tdhca.texas.gov/income-limits",
+    "publisher": "Texas Department of Housing and Community Affairs",
+    "title": "TDHCA income limits",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "State income guidelines for community affairs programs — could not be retrieved (HTTP 403)",
+    "reviewStatus": "inaccessible"
+  },
+  {
+    "id": "src.ceap.usagov_energy",
+    "url": "https://www.usa.gov/help-with-energy-bills",
+    "publisher": "USAGov",
+    "title": "Get help with energy bills",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": "2026-01-13",
+    "effectiveTo": null,
+    "section": "LIHEAP eligibility is income based and every state sets its own requirements; steps are to check eligibility, find the state office and apply (page last updated January 13, 2026)",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.ceap.211texas",
+    "url": "https://www.211texas.org/",
+    "publisher": "Texas Health and Human Services Commission",
+    "title": "2-1-1 Texas",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Statewide referral service, reachable by dialing 2-1-1 or (877) 541-7905, used to find the local agency that takes utility-assistance applications",
+    "reviewStatus": "verified"
+  }
+]

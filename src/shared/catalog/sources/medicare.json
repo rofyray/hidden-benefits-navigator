@@ -1,0 +1,46 @@
+[
+  {
+    "id": "src.medicare.msp",
+    "url": "https://www.medicare.gov/basics/costs/help/medicare-savings-programs",
+    "publisher": "Centers for Medicare & Medicaid Services",
+    "title": "Medicare Savings Programs",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": "2026-01-01",
+    "effectiveTo": "2026-12-31",
+    "section": "2026 monthly income and resource limits for QMB, SLMB, QI and QDWI, and the note that states may disregard some income or resources",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.medicare.extra_help",
+    "url": "https://www.medicare.gov/basics/costs/help/drug-costs",
+    "publisher": "Centers for Medicare & Medicaid Services",
+    "title": "Help with drug costs (Extra Help)",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": "2026-01-01",
+    "effectiveTo": "2026-12-31",
+    "section": "2026 annual income and resource limits for Extra Help, the automatic-qualification pathways, and the rule that Extra Help continues through December 31 of the calendar year",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.medicare.ssa_apply",
+    "url": "https://www.ssa.gov/medicare/part-d-extra-help",
+    "publisher": "Social Security Administration",
+    "title": "Apply for Extra Help with Medicare prescription drug costs",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Application destination named by Medicare.gov — the page returned HTTP 403 to this environment, so its wording was not reviewed here",
+    "reviewStatus": "inaccessible"
+  },
+  {
+    "id": "src.medicare.texas_msp",
+    "url": "https://www.hhs.texas.gov/services/health/medicaid-chip/programs/medicare-savings-programs",
+    "publisher": "Texas Health and Human Services",
+    "title": "Medicare Savings Programs (Texas)",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Texas application route — the page returned HTTP 403 to this environment, so no Texas-specific rule or document list is claimed",
+    "reviewStatus": "inaccessible"
+  }
+]

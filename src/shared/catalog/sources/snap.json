@@ -1,0 +1,35 @@
+[
+  {
+    "id": "src.snap.c120",
+    "url": "https://fhb.hhs.texas.gov/handbooks/texas-works-handbook/c-120-supplemental-nutrition-assistance-program",
+    "publisher": "Texas Health and Human Services Commission",
+    "title": "C-120, Supplemental Nutrition Assistance Program (Texas Works Handbook)",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": "2025-10-01",
+    "effectiveTo": null,
+    "section": "C-121 Maximum Income Limits; C-121.1 Deduction Amounts; C-122 How to Determine Monthly SNAP Allotments (Revision 25-4, effective Oct. 1, 2025)",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.snap.ytb",
+    "url": "https://www.yourtexasbenefits.com/Learn/Home",
+    "publisher": "Texas Health and Human Services Commission",
+    "title": "Your Texas Benefits",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Sign-in and application entry point, including applying without an account",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.snap.overview",
+    "url": "https://www.hhs.texas.gov/services/food/snap-food-benefits",
+    "publisher": "Texas Health and Human Services Commission",
+    "title": "SNAP Food Benefits (program overview)",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Program overview and how to apply — returned HTTP 403 to automated retrieval on 2026-09-19 and could not be reviewed",
+    "reviewStatus": "inaccessible"
+  }
+]

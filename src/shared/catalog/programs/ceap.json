@@ -1,0 +1,156 @@
+{
+  "id": "ceap",
+  "name": "Help with energy bills (CEAP)",
+  "jurisdiction": "TX",
+  "version": "0.1.0",
+  "status": "published",
+  "validFrom": "2026-09-19",
+  "validTo": null,
+  "reviewDueOn": "2026-12-19",
+  "coverage": "Routes Texas households to the local agency that takes utility-assistance applications. The current Texas income guidelines could not be retrieved from the state agency, so this card does not score income and makes no numeric eligibility claim.",
+  "limitations": [
+    "The state income guidelines could not be retrieved, so no income threshold is applied.",
+    "This is a referral, not a screen: no label above 'possibly' is produced for this program.",
+    "Funding is limited and can run out during a program year; a referral is not a promise of help.",
+    "Local agencies differ in what they cover and in how they take applications.",
+    "This card does not ask for your county, so it routes you through the statewide referral line rather than naming one office."
+  ],
+  "eligibilitySummary": [
+    "The Comprehensive Energy Assistance Program helps Texas households pay heating and cooling bills.",
+    "Help is based on income, and the state and the local agency set the rules and the amounts.",
+    "Applications are taken by local agencies, which you can find through 2-1-1 Texas.",
+    "The local agency makes the final decision, and help depends on funds being available."
+  ],
+  "evidence": [
+    {
+      "id": "ev.ceap.income_based",
+      "text": "LIHEAP, the federal program behind Texas CEAP, helps pay heating or cooling bills and provides emergency help during an energy crisis; eligibility is based on income, and every state and territory sets its own requirements.",
+      "sourceIds": ["src.ceap.usagov_energy"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.ceap.no_income_table",
+      "text": "The Texas agency pages carrying the current CEAP eligibility rules and income limits returned HTTP 403 on September 19, 2026, from both a direct request and a real browser session, so no Texas income limit is encoded and no numeric screen is offered.",
+      "sourceIds": ["src.ceap.tdhca_program", "src.ceap.tdhca_income"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.ceap.utility_responsibility",
+      "text": "The program pays toward home heating and cooling energy costs, so it applies to a household that is responsible for an energy bill.",
+      "sourceIds": ["src.ceap.usagov_energy"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.ceap.local_provider",
+      "text": "The published steps are to check eligibility, find the state or territory office, and apply; some offices accept online applications and others require applying in person.",
+      "sourceIds": ["src.ceap.usagov_energy"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.ceap.211",
+      "text": "2-1-1 Texas, run by the Texas Health and Human Services Commission, connects callers to local services and can be reached by dialing 2-1-1 or (877) 541-7905.",
+      "sourceIds": ["src.ceap.211texas"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.ceap.documents",
+      "text": "Local agencies set their own document lists, so this card asks the agency rather than listing paperwork it cannot verify; bills and proof of income are the usual starting point named by the referral service.",
+      "sourceIds": ["src.ceap.211texas", "src.ceap.usagov_energy"],
+      "kind": "document"
+    },
+    {
+      "id": "ev.ceap.funding",
+      "text": "Help is limited by the funds the local agency has available, so a referral does not promise an award or a particular amount.",
+      "sourceIds": ["src.ceap.usagov_energy"],
+      "kind": "caveat"
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.ceap.state",
+      "fieldIds": ["state"],
+      "evidenceIds": ["ev.ceap.income_based"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "state", "values": ["TX"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.ceap.utility_responsibility",
+      "fieldIds": ["ceap.utilityResponsibility"],
+      "evidenceIds": ["ev.ceap.utility_responsibility"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "ceap.utilityResponsibility", "values": ["yes", "unknown"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.ceap.heating_cooling_need",
+      "fieldIds": ["ceap.needsHeatingCoolingHelp"],
+      "evidenceIds": ["ev.ceap.income_based"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "ceap.needsHeatingCoolingHelp", "values": ["yes", "unknown"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.ceap.local_referral",
+      "fieldIds": [],
+      "evidenceIds": ["ev.ceap.no_income_table", "ev.ceap.local_provider", "ev.ceap.funding"],
+      "operator": "referral",
+      "operands": { "reasonCode": "income_rules_not_verifiable" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    }
+  ],
+  "requiredFieldIds": ["state"],
+  "optionalFieldIds": [
+    "householdSize",
+    "income",
+    "ceap.utilityResponsibility",
+    "ceap.needsHeatingCoolingHelp",
+    "ceap.householdDefinitionConfirmed"
+  ],
+  "value": {
+    "kind": "variable",
+    "text": "The amount depends on your household, your energy costs and the funds the local agency has; no amount is promised here.",
+    "evidenceIds": ["ev.ceap.funding", "ev.ceap.income_based"],
+    "period": "varies"
+  },
+  "documents": [
+    {
+      "id": "doc.ceap.ask_agency",
+      "label": "Ask the local agency what it needs; agencies set their own lists.",
+      "whenRuleId": null,
+      "requiredness": "askAgency",
+      "evidenceIds": ["ev.ceap.documents"]
+    },
+    {
+      "id": "doc.ceap.energy_bill",
+      "label": "Your most recent energy bill, if you have one.",
+      "whenRuleId": "rule.ceap.utility_responsibility",
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.ceap.documents", "ev.ceap.utility_responsibility"]
+    }
+  ],
+  "application": [
+    {
+      "id": "app.ceap.211",
+      "label": "Find the local agency that takes applications through 2-1-1 Texas (or dial 2-1-1).",
+      "url": "https://www.211texas.org/",
+      "evidenceIds": ["ev.ceap.211"]
+    },
+    {
+      "id": "app.ceap.usagov",
+      "label": "Read the federal overview of help with energy bills and how to apply.",
+      "url": "https://www.usa.gov/help-with-energy-bills",
+      "evidenceIds": ["ev.ceap.local_provider"]
+    }
+  ],
+  "fallbackExplanation": "We could not read the current Texas income rules for this program, so we are not guessing whether you qualify. The local agency that takes applications can tell you, and 2-1-1 Texas will point you to the one nearest you.",
+  "fallbackChecklistIds": ["app.ceap.211", "doc.ceap.ask_agency"]
+}

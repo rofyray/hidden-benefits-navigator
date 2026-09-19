@@ -1,0 +1,241 @@
+{
+  "id": "snap",
+  "name": "SNAP food benefits",
+  "jurisdiction": "TX",
+  "version": "0.1.0",
+  "status": "published",
+  "validFrom": "2025-10-01",
+  "validTo": null,
+  "reviewDueOn": "2026-10-01",
+  "coverage": "Screens Texas households against the published SNAP maximum income limits, the separate-household and categorically-eligible 165% column, and the older-adult or disability exception path. Deductions, work, student, residency and other non-financial rules are not screened here.",
+  "limitations": [
+    "This is a partial income screen, not an agency determination.",
+    "Deductions are not calculated, so a household above the gross limit can still qualify after deductions.",
+    "Work, student, citizenship and other non-financial rules are not checked.",
+    "The published limits change on October 1 each year; the encoded table is effective October 1, 2025."
+  ],
+  "eligibilitySummary": [
+    "SNAP helps with the cost of groceries and is run in Texas by Texas Health and Human Services.",
+    "Whether you qualify depends on who buys and prepares food together, your income and allowable deductions.",
+    "Households that include someone who is older or has a disability are measured differently and have extra pathways.",
+    "Texas HHS makes the final decision after reviewing your application."
+  ],
+  "evidence": [
+    {
+      "id": "ev.snap.gross130",
+      "text": "The SNAP maximum income limits effective October 1, 2025 list gross monthly (130%) limits of $1,696 for a household of 1, $2,292 for 2, $2,888 for 3, $3,483 for 4, $4,079 for 5, $4,675 for 6, $5,271 for 7, $5,867 for 8, $6,463 for 9 and $7,059 for 10, plus $596 for each additional person.",
+      "sourceIds": ["src.snap.c120"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.snap.net100",
+      "text": "The same table lists net monthly (100%) limits of $1,305 for a household of 1, $1,763 for 2, $2,221 for 3, $2,680 for 4, $3,138 for 5, $3,596 for 6, $4,055 for 7, $4,513 for 8, $4,972 for 9 and $5,431 for 10, plus $459 for each additional person.",
+      "sourceIds": ["src.snap.c120"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.snap.165",
+      "text": "The 165% column ($2,152 for 1, $2,909 for 2, $3,665 for 3, $4,421 for 4, $5,177 for 5, $5,934 for 6, $6,690 for 7, $7,446 for 8, $8,203 for 9, $8,960 for 10, plus $757 each additional person) is used to decide whether a person who is elderly or has a disability living with others may claim separate household status, and is also the income limit for categorically eligible households.",
+      "sourceIds": ["src.snap.c120"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.snap.deductions",
+      "text": "The handbook lists deductions used in the SNAP budget, including a standard deduction of $209 for households of three or fewer, $223 for four, $261 for five and $299 for six or more, a standard medical expense of $170 minus $35, a homeless shelter standard deduction of $198.99, a maximum excess shelter deduction of $744, a standard utility allowance of $445, a basic utility allowance of $400 and a telephone standard deduction of $62.",
+      "sourceIds": ["src.snap.c120"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.snap.allotment",
+      "text": "The monthly allotment is calculated from the household's net monthly income and household size: net monthly income is multiplied by .30, rounded up to the next whole dollar and subtracted from the maximum monthly allotment for that household size.",
+      "sourceIds": ["src.snap.c120"],
+      "kind": "value"
+    },
+    {
+      "id": "ev.snap.apply",
+      "text": "Texas benefits applications are submitted through Your Texas Benefits, which allows applying with an account or without one.",
+      "sourceIds": ["src.snap.ytb"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.snap.ask_agency",
+      "text": "The Texas HHS SNAP overview page could not be reviewed on September 19, 2026 (HTTP 403), so no required document list is claimed here; the agency states which information applies to a specific household.",
+      "sourceIds": ["src.snap.overview", "src.snap.ytb"],
+      "kind": "document"
+    },
+    {
+      "id": "ev.snap.transition",
+      "text": "The encoded income limits and deduction amounts come from Revision 25-4, effective October 1, 2025; SNAP limits are adjusted annually on October 1, so the table must be re-checked before October 1, 2026.",
+      "sourceIds": ["src.snap.c120"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.snap.nonfinancial",
+      "text": "Income limits are only part of SNAP eligibility; this screen does not check work, student, citizenship or other non-financial rules, which Texas HHS applies when it reviews an application.",
+      "sourceIds": ["src.snap.c120", "src.snap.ytb"],
+      "kind": "caveat"
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.snap.state",
+      "fieldIds": ["state"],
+      "evidenceIds": ["ev.snap.apply"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "state", "values": ["TX"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.snap.gross130",
+      "fieldIds": ["income", "foodHouseholdSize"],
+      "evidenceIds": ["ev.snap.gross130"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "income",
+        "amountCents": null,
+        "householdScale": {
+          "householdFieldId": "foodHouseholdSize",
+          "bySize": {
+            "1": 169600,
+            "2": 229200,
+            "3": 288800,
+            "4": 348300,
+            "5": 407900,
+            "6": 467500,
+            "7": 527100,
+            "8": 586700,
+            "9": 646300,
+            "10": 705900
+          },
+          "additionalPerPersonCents": 59600
+        },
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "gross"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.snap.categorical165", "rule.snap.older_or_disabled"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.snap.net100",
+      "fieldIds": ["snap.countableNetMonthly", "foodHouseholdSize"],
+      "evidenceIds": ["ev.snap.net100", "ev.snap.deductions"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "snap.countableNetMonthly",
+        "amountCents": null,
+        "householdScale": {
+          "householdFieldId": "foodHouseholdSize",
+          "bySize": {
+            "1": 130500,
+            "2": 176300,
+            "3": 222100,
+            "4": 268000,
+            "5": 313800,
+            "6": 359600,
+            "7": 405500,
+            "8": 451300,
+            "9": 497200,
+            "10": 543100
+          },
+          "additionalPerPersonCents": 45900
+        },
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "net"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.snap.categorical165",
+      "fieldIds": ["income", "foodHouseholdSize"],
+      "evidenceIds": ["ev.snap.165"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "income",
+        "amountCents": null,
+        "householdScale": {
+          "householdFieldId": "foodHouseholdSize",
+          "bySize": {
+            "1": 215200,
+            "2": 290900,
+            "3": 366500,
+            "4": 442100,
+            "5": 517700,
+            "6": 593400,
+            "7": 669000,
+            "8": 744600,
+            "9": 820300,
+            "10": 896000
+          },
+          "additionalPerPersonCents": 75700
+        },
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "gross"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.snap.older_or_disabled",
+      "fieldIds": ["snap.olderOrDisabled", "snap.snapExceptionStatus"],
+      "evidenceIds": ["ev.snap.165", "ev.snap.deductions"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "snap.olderOrDisabled", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.snap.nonfinancial_referral",
+      "fieldIds": [],
+      "evidenceIds": ["ev.snap.nonfinancial"],
+      "operator": "referral",
+      "operands": { "reasonCode": "nonfinancial_rules_not_screened" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    }
+  ],
+  "requiredFieldIds": ["state", "foodHouseholdSize", "income"],
+  "optionalFieldIds": [
+    "snap.olderOrDisabled",
+    "snap.snapExceptionStatus",
+    "snap.deductionsAssessed",
+    "snap.countableNetMonthly",
+    "householdSize",
+    "sharesFood"
+  ],
+  "value": {
+    "kind": "variable",
+    "text": "The amount depends on your household and income.",
+    "evidenceIds": ["ev.snap.allotment"],
+    "period": "month"
+  },
+  "documents": [
+    {
+      "id": "doc.snap.ask_agency",
+      "label": "Ask what information applies to your household",
+      "whenRuleId": null,
+      "requiredness": "askAgency",
+      "evidenceIds": ["ev.snap.ask_agency"]
+    }
+  ],
+  "application": [
+    {
+      "id": "app.snap.apply",
+      "label": "Open the official Your Texas Benefits page",
+      "url": "https://www.yourtexasbenefits.com/Learn/Home",
+      "evidenceIds": ["ev.snap.apply"]
+    }
+  ],
+  "fallbackExplanation": "SNAP helps with the cost of groceries. Whether you qualify depends on who buys and prepares food with you, your income and allowable deductions, so this is only a preliminary look. Texas Health and Human Services makes the final decision.",
+  "fallbackChecklistIds": ["app.snap.apply", "doc.snap.ask_agency"]
+}

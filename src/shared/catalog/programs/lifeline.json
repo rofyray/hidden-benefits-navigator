@@ -1,0 +1,338 @@
+{
+  "id": "lifeline",
+  "name": "Lifeline phone and internet discount",
+  "jurisdiction": "US",
+  "version": "0.1.0",
+  "status": "published",
+  "validFrom": "2026-09-19",
+  "validTo": null,
+  "reviewDueOn": "2027-02-19",
+  "coverage": "Screens the two Lifeline pathways separately: participation in a listed assistance program by anyone in the household, and the income route at 135% of the 2026 Federal Poverty Guidelines. Texas applicants are routed to the state site USAC links to. The survivor pathway and Tribal pathways are referrals, not screened here.",
+  "limitations": [
+    "A SNAP or Medicaid match suggested by this app is not enrollment; only an actual, current enrollment can be used for the participation route.",
+    "The Texas state enrollment site could not be read from here, so its present-day process is not described; the destination is the one USAC publishes.",
+    "Lifeline counts an economic household, which is not always the same as the people living at an address; the program decides that.",
+    "Only one Lifeline benefit is allowed per household, and an existing benefit is checked by the program.",
+    "The survivor pathway, Tribal lands benefit, and the enhanced Tribal amount are referrals here, not screened.",
+    "Income figures shown are the contiguous-states table; Alaska and Hawaii use different figures."
+  ],
+  "eligibilitySummary": [
+    "Lifeline is a monthly discount on phone or internet service.",
+    "You can qualify either by being in one of the listed assistance programs, or by income.",
+    "Someone else in your household being in a listed program also counts.",
+    "Only one Lifeline discount is allowed per household."
+  ],
+  "evidence": [
+    {
+      "id": "ev.lifeline.participation",
+      "text": "USAC states you can get Lifeline if you, or someone in your household, participate in Medicaid, SNAP, Supplemental Security Income (SSI), Federal Public Housing Assistance, the Housing Choice Voucher program, Project-based Rental Assistance, Public Housing, affordable housing programs for American Indians, Alaska Natives or Native Hawaiians, or the Veterans Pension and Survivors Benefit; a child's or dependent's participation also counts.",
+      "sourceIds": ["src.lifeline.qualify"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.lifeline.participation_is_enrollment",
+      "text": "The participation route rests on actual program participation, and USAC states an applicant may be asked to show proof of program participation, such as a benefit letter or official document.",
+      "sourceIds": ["src.lifeline.qualify"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.lifeline.income_rule",
+      "text": "USAC states you can get Lifeline if your income is at 135% or less of the 2026 Federal Poverty Guidelines, based on household size and state.",
+      "sourceIds": ["src.lifeline.qualify"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.lifeline.income_table",
+      "text": "The 2026 annual income limits for the 48 contiguous states, D.C. and territories are $21,546 for 1 person, $29,214 for 2, $36,882 for 3, $44,550 for 4, $52,218 for 5, $59,886 for 6, $67,554 for 7 and $75,222 for 8, adding $7,668 for each additional person. Alaska and Hawaii use higher published figures.",
+      "sourceIds": ["src.lifeline.qualify"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.lifeline.income_proof",
+      "text": "USAC states an applicant may be asked to show proof of income, such as a tax return or three months of consecutive pay stubs.",
+      "sourceIds": ["src.lifeline.qualify"],
+      "kind": "document"
+    },
+    {
+      "id": "ev.lifeline.household",
+      "text": "Lifeline eligibility is assessed for a household, and the program decides what counts as that household; the application asks for identity details including name, date of birth, the last four digits of a Social Security number or Tribal ID, and home address.",
+      "sourceIds": ["src.lifeline.faqs", "src.lifeline.qualify"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.lifeline.value",
+      "text": "USAC states the standard Lifeline benefit is up to a $9.25 monthly discount on internet or bundled service, or up to $5.25 monthly on phone service, and up to $34.25 monthly on phone, internet or bundled service for those living on Tribal lands.",
+      "sourceIds": ["src.lifeline.faqs"],
+      "kind": "value"
+    },
+    {
+      "id": "ev.lifeline.existing_benefit",
+      "text": "A Lifeline benefit is claimed through a phone or internet company and is recertified every year; a person can switch companies at any time and may need to reapply to confirm they still qualify.",
+      "sourceIds": ["src.lifeline.faqs"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.lifeline.texas_route",
+      "text": "USAC states that people who live in Oregon or Texas apply through their state website, and links Texas applicants to https://www.texaslifeline.org/.",
+      "sourceIds": ["src.lifeline.apply"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.lifeline.texas_unread",
+      "text": "The Texas state site returned HTTP 403 to a direct request and to a real browser session on September 19, 2026, so its present-day steps and documents are not described here.",
+      "sourceIds": ["src.lifeline.texas", "src.lifeline.apply"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.lifeline.national_apply",
+      "text": "USAC's national routes are applying online, applying with the help of a participating phone or internet company, or applying by mail; the Lifeline Support Center is at (800) 234-9473 and can mail an application.",
+      "sourceIds": ["src.lifeline.apply", "src.lifeline.faqs"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.lifeline.survivor",
+      "text": "USAC describes a separate survivor pathway for survivors of domestic violence, human trafficking and related crimes, with extended criteria including income at or below 200% of the Federal Poverty Guidelines, WIC enrollment, free and reduced-price school meals, or a Federal Pell Grant in the current award year, and up to 6 months of emergency support.",
+      "sourceIds": ["src.lifeline.qualify"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.lifeline.tribal",
+      "text": "USAC describes additional qualifying programs and an enhanced benefit for people living on qualifying Tribal lands, including Bureau of Indian Affairs General Assistance, Tribal TANF, Head Start for income-qualifying households, and the Food Distribution Program on Indian Reservations.",
+      "sourceIds": ["src.lifeline.qualify", "src.lifeline.faqs"],
+      "kind": "eligibility"
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.lifeline.qualifies",
+      "fieldIds": [],
+      "evidenceIds": ["ev.lifeline.participation", "ev.lifeline.income_rule"],
+      "operator": "any",
+      "operands": { "ruleIds": ["rule.lifeline.participation", "rule.lifeline.income_table"] },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.lifeline.survivor_referral", "rule.lifeline.tribal_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.lifeline.participation",
+      "fieldIds": [],
+      "evidenceIds": ["ev.lifeline.participation", "ev.lifeline.participation_is_enrollment"],
+      "operator": "any",
+      "operands": {
+        "ruleIds": [
+          "rule.lifeline.enrolled_snap",
+          "rule.lifeline.enrolled_medicaid",
+          "rule.lifeline.enrolled_ssi",
+          "rule.lifeline.enrolled_housing",
+          "rule.lifeline.enrolled_veterans_pension"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.lifeline.enrolled_snap",
+      "fieldIds": ["receivesSnap"],
+      "evidenceIds": ["ev.lifeline.participation", "ev.lifeline.participation_is_enrollment"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "receivesSnap", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.lifeline.enrolled_medicaid",
+      "fieldIds": ["receivesMedicaid"],
+      "evidenceIds": ["ev.lifeline.participation", "ev.lifeline.participation_is_enrollment"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "receivesMedicaid", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.lifeline.enrolled_ssi",
+      "fieldIds": ["receivesSsi"],
+      "evidenceIds": ["ev.lifeline.participation", "ev.lifeline.participation_is_enrollment"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "receivesSsi", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.lifeline.enrolled_housing",
+      "fieldIds": ["receivesHousingAid"],
+      "evidenceIds": ["ev.lifeline.participation", "ev.lifeline.participation_is_enrollment"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "receivesHousingAid", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.lifeline.enrolled_veterans_pension",
+      "fieldIds": ["receivesVeteransPension"],
+      "evidenceIds": ["ev.lifeline.participation", "ev.lifeline.participation_is_enrollment"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "receivesVeteransPension", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.lifeline.income_table",
+      "fieldIds": ["income", "lifeline.economicHouseholdSize"],
+      "evidenceIds": ["ev.lifeline.income_rule", "ev.lifeline.income_table"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "income",
+        "amountCents": null,
+        "householdScale": {
+          "householdFieldId": "lifeline.economicHouseholdSize",
+          "bySize": {
+            "1": 2154600,
+            "2": 2921400,
+            "3": 3688200,
+            "4": 4455000,
+            "5": 5221800,
+            "6": 5988600,
+            "7": 6755400,
+            "8": 7522200
+          },
+          "additionalPerPersonCents": 766800
+        },
+        "currency": "USD",
+        "period": "annual",
+        "basis": "gross"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.lifeline.household_definition_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.lifeline.one_per_household",
+      "fieldIds": ["existingLifeline"],
+      "evidenceIds": ["ev.lifeline.existing_benefit"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "existingLifeline", "values": ["yes"] },
+      "effect": "exclusion",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.lifeline.household_definition_referral",
+      "fieldIds": ["lifeline.householdBasisConfirmed"],
+      "evidenceIds": ["ev.lifeline.household"],
+      "operator": "referral",
+      "operands": { "reasonCode": "economic_household_defined_by_program" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.lifeline.survivor_referral",
+      "fieldIds": ["lifeline.specialPathwayReviewNeeded"],
+      "evidenceIds": ["ev.lifeline.survivor"],
+      "operator": "referral",
+      "operands": { "reasonCode": "survivor_pathway_reviewed_by_program" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.lifeline.tribal_referral",
+      "fieldIds": ["lifeline.specialPathwayReviewNeeded"],
+      "evidenceIds": ["ev.lifeline.tribal"],
+      "operator": "referral",
+      "operands": { "reasonCode": "tribal_pathway_reviewed_by_program" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.lifeline.texas_route_referral",
+      "fieldIds": ["state"],
+      "evidenceIds": ["ev.lifeline.texas_route", "ev.lifeline.texas_unread"],
+      "operator": "referral",
+      "operands": { "reasonCode": "texas_applies_through_state_site" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    }
+  ],
+  "requiredFieldIds": [],
+  "optionalFieldIds": [
+    "state",
+    "householdSize",
+    "income",
+    "receivesSnap",
+    "receivesMedicaid",
+    "receivesSsi",
+    "receivesHousingAid",
+    "receivesVeteransPension",
+    "existingLifeline",
+    "lifeline.economicHouseholdSize",
+    "lifeline.householdBasisConfirmed",
+    "lifeline.specialPathwayReviewNeeded"
+  ],
+  "value": {
+    "kind": "discount",
+    "text": "Up to $9.25 off a month for internet or bundled service, or up to $5.25 off a month for phone service. On qualifying Tribal lands the discount can be up to $34.25 a month.",
+    "evidenceIds": ["ev.lifeline.value"],
+    "period": "month"
+  },
+  "documents": [
+    {
+      "id": "doc.lifeline.program_proof",
+      "label": "Proof you are in one of the listed programs — a benefit letter or official document — if you are qualifying that way.",
+      "whenRuleId": "rule.lifeline.participation",
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.lifeline.participation_is_enrollment"]
+    },
+    {
+      "id": "doc.lifeline.income_proof",
+      "label": "Proof of income — such as a tax return or three months of consecutive pay stubs — if you are qualifying by income.",
+      "whenRuleId": "rule.lifeline.income_table",
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.lifeline.income_proof"]
+    },
+    {
+      "id": "doc.lifeline.identity",
+      "label": "Your name, date of birth, home address, and the last four digits of your Social Security number or Tribal ID.",
+      "whenRuleId": null,
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.lifeline.household"]
+    },
+    {
+      "id": "doc.lifeline.ask_texas",
+      "label": "Texas runs its own Lifeline sign-up, so ask the Texas site what it needs from you.",
+      "whenRuleId": "rule.lifeline.texas_route_referral",
+      "requiredness": "askAgency",
+      "evidenceIds": ["ev.lifeline.texas_route", "ev.lifeline.texas_unread"]
+    }
+  ],
+  "application": [
+    {
+      "id": "app.lifeline.texas",
+      "label": "In Texas, apply through the state Lifeline site.",
+      "url": "https://www.texaslifeline.org/",
+      "evidenceIds": ["ev.lifeline.texas_route"]
+    },
+    {
+      "id": "app.lifeline.how_to_apply",
+      "label": "See all the ways to apply, including by mail or through a phone or internet company.",
+      "url": "https://www.lifelinesupport.org/how-to-apply/",
+      "evidenceIds": ["ev.lifeline.national_apply"]
+    },
+    {
+      "id": "app.lifeline.companies",
+      "label": "Find phone or internet companies near you that offer Lifeline.",
+      "url": "https://www.lifelinesupport.org/companies-near-me/",
+      "evidenceIds": ["ev.lifeline.national_apply"]
+    }
+  ],
+  "fallbackExplanation": "Lifeline is a monthly discount on phone or internet service. You can qualify by being in a program like SNAP, Medicaid, SSI, housing assistance or a Veterans Pension — yours or someone else's in your household — or by income at or below the published limit for your household size. Only one discount is allowed per household. In Texas you apply through the state Lifeline site, and the program decides.",
+  "fallbackChecklistIds": ["app.lifeline.texas", "app.lifeline.how_to_apply", "doc.lifeline.ask_texas"]
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "src.lifeline.qualify",
+    "url": "https://www.lifelinesupport.org/how-to-qualify/",
+    "publisher": "Universal Service Administrative Company (USAC)",
+    "title": "How to Qualify",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": "2026-01-01",
+    "effectiveTo": null,
+    "section": "Program participation list, income route at 135% of the 2026 Federal Poverty Guidelines with the full household table, and the survivor extended-eligibility criteria",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.lifeline.faqs",
+    "url": "https://www.lifelinesupport.org/faqs/",
+    "publisher": "Universal Service Administrative Company (USAC)",
+    "title": "Frequently Asked Questions",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Standard benefit amounts for internet or bundled service and for voice-only service, enhanced Tribal benefit, identity information asked for on the application, and annual recertification (USAC or the state, except Oregon and Texas)",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.lifeline.apply",
+    "url": "https://www.lifelinesupport.org/how-to-apply/",
+    "publisher": "Universal Service Administrative Company (USAC)",
+    "title": "How to Apply",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "Three ways to apply, and the instruction that people in Oregon or Texas apply through their state website, which USAC links to https://www.texaslifeline.org/",
+    "reviewStatus": "verified"
+  },
+  {
+    "id": "src.lifeline.texas",
+    "url": "https://www.texaslifeline.org/",
+    "publisher": "Texas Lifeline (state administrator)",
+    "title": "Texas Lifeline",
+    "retrievedOn": "2026-09-19",
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "section": "State enrollment destination — could not be read (HTTP 403 from a direct request and from a real browser session); the destination itself is confirmed by the USAC how-to-apply page, but its present-day process is not described here",
+    "reviewStatus": "inaccessible"
+  }
+]

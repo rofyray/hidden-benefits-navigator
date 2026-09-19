@@ -1,0 +1,262 @@
+{
+  "id": "eitc",
+  "name": "Earned Income Tax Credit",
+  "jurisdiction": "US",
+  "version": "0.1.0",
+  "status": "published",
+  "validFrom": "2025-01-01",
+  "validTo": null,
+  "reviewDueOn": "2026-10-19",
+  "coverage": "Screens the tax year 2025 adjusted gross income limits by filing status and number of qualifying children, the investment income limit, and the age rule for claiming without a qualifying child.",
+  "limitations": [
+    "Only tax year 2025 is encoded; a different tax year must be reviewed before it is screened.",
+    "Qualifying child relationship, age and residency tests are not applied here.",
+    "Citizenship, Social Security number and Form 2555 rules are not checked.",
+    "Maximum credit amounts are ceilings published by the IRS, not amounts anyone is guaranteed.",
+    "The IRS decides the credit when a return is filed."
+  ],
+  "eligibilitySummary": [
+    "The Earned Income Tax Credit lowers the tax owed by people who work and earn a low to moderate income, and can lead to a refund.",
+    "Whether you qualify depends on your earned income, your adjusted gross income, your filing status and how many qualifying children you claim.",
+    "You can qualify with no children if you were at least 25 and under 65 at the end of the year and meet the other rules.",
+    "The IRS makes the final decision when your return is filed."
+  ],
+  "evidence": [
+    {
+      "id": "ev.eitc.agi2025",
+      "text": "For tax year 2025 the maximum adjusted gross income is $19,104 with no children ($26,214 married filing jointly), $50,434 with one child ($57,554 jointly), $57,310 with two children ($64,430 jointly) and $61,555 with three or more children ($68,675 jointly).",
+      "sourceIds": ["src.eitc.tables"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.eitc.investment2025",
+      "text": "For tax year 2025 investment income must be $11,950 or less.",
+      "sourceIds": ["src.eitc.tables"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.eitc.maxcredit2025",
+      "text": "For tax year 2025 the maximum amount of the credit is $649 with no qualifying children, $4,328 with one, $7,152 with two and $8,046 with three or more.",
+      "sourceIds": ["src.eitc.tables"],
+      "kind": "value"
+    },
+    {
+      "id": "ev.eitc.basic_rules",
+      "text": "To qualify you must have earned income, have investment income below the limit, have a valid Social Security number by the due date of the return including extensions, be a U.S. citizen or resident alien all year, not file Form 2555, and meet certain rules if separated from a spouse and not filing jointly.",
+      "sourceIds": ["src.eitc.who"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.eitc.filing_status",
+      "text": "Eligible filing statuses are married filing jointly, head of household, qualifying surviving spouse, single and, under specific conditions, married filing separately.",
+      "sourceIds": ["src.eitc.who"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.eitc.childless",
+      "text": "You can claim the credit without a qualifying child if you lived in the United States for more than half the tax year, cannot be claimed as a qualifying child or dependent of another person, and were at least 25 and under 65 at the end of the year; for a joint return at least one spouse must meet the age rule.",
+      "sourceIds": ["src.eitc.who"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.eitc.special_rules",
+      "text": "The credit has special qualifying rules for military members, clergy members, and taxpayers and their relatives with disabilities.",
+      "sourceIds": ["src.eitc.who"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.eitc.assistant",
+      "text": "The IRS publishes an EITC Assistant for checking whether you qualify.",
+      "sourceIds": ["src.eitc.assistant"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.eitc.free_prep",
+      "text": "The IRS lists free tax return preparation by trained volunteers and free electronic filing options.",
+      "sourceIds": ["src.eitc.vita", "src.eitc.freefile"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.eitc.taxyear_caveat",
+      "text": "The figures encoded here are the published tax year 2025 amounts; the IRS publishes different amounts for each tax year, so a different year must be reviewed before it is screened.",
+      "sourceIds": ["src.eitc.tables"],
+      "kind": "caveat"
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.eitc.taxyear2025",
+      "fieldIds": ["eitc.taxYear"],
+      "evidenceIds": ["ev.eitc.taxyear_caveat"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "eitc.taxYear", "values": ["2025"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.eitc.agi_single_0",
+      "fieldIds": ["eitc.agiAnnual", "eitc.qualifyingChildrenCount", "eitc.filingStatus"],
+      "evidenceIds": ["ev.eitc.agi2025"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "eitc.agiAnnual",
+        "amountCents": null,
+        "householdScale": {
+          "householdFieldId": "eitc.qualifyingChildrenCount",
+          "bySize": { "0": 1910400, "1": 5043400, "2": 5731000, "3": 6155500 },
+          "additionalPerPersonCents": null
+        },
+        "currency": "USD",
+        "period": "taxYear",
+        "basis": "countable",
+        "taxYear": 2025
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.eitc.agi_joint"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.eitc.agi_joint",
+      "fieldIds": ["eitc.agiAnnual", "eitc.qualifyingChildrenCount", "eitc.filingStatus"],
+      "evidenceIds": ["ev.eitc.agi2025", "ev.eitc.filing_status"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "eitc.agiAnnual",
+        "amountCents": null,
+        "householdScale": {
+          "householdFieldId": "eitc.qualifyingChildrenCount",
+          "bySize": { "0": 2621400, "1": 5755400, "2": 6443000, "3": 6867500 },
+          "additionalPerPersonCents": null
+        },
+        "currency": "USD",
+        "period": "taxYear",
+        "basis": "countable",
+        "taxYear": 2025
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.eitc.investment",
+      "fieldIds": ["eitc.investmentIncomeWithinLimit"],
+      "evidenceIds": ["ev.eitc.investment2025"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "eitc.investmentIncomeWithinLimit", "values": ["yes", "unknown"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.eitc.earned_income",
+      "fieldIds": ["eitc.earnedAnnual"],
+      "evidenceIds": ["ev.eitc.basic_rules"],
+      "operator": "gte",
+      "operands": {
+        "fieldId": "eitc.earnedAnnual",
+        "amountCents": 1,
+        "householdScale": null,
+        "currency": "USD",
+        "period": "taxYear",
+        "basis": "countable",
+        "taxYear": 2025
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.eitc.filing_status",
+      "fieldIds": ["eitc.filingStatus"],
+      "evidenceIds": ["ev.eitc.filing_status"],
+      "operator": "enumIn",
+      "operands": {
+        "fieldId": "eitc.filingStatus",
+        "values": ["single", "headOfHousehold", "joint", "survivingSpouse", "separate", "unknown"]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.eitc.childless_age",
+      "fieldIds": [
+        "eitc.childlessAge25to64",
+        "eitc.qualifyingChildrenCount",
+        "eitc.childlessResidenceAndDependencyChecks"
+      ],
+      "evidenceIds": ["ev.eitc.childless"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "eitc.childlessAge25to64", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.eitc.special_rules_referral",
+      "fieldIds": ["eitc.specialRuleApplies"],
+      "evidenceIds": ["ev.eitc.special_rules"],
+      "operator": "referral",
+      "operands": { "reasonCode": "special_rules_need_review" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    }
+  ],
+  "requiredFieldIds": ["eitc.taxYear", "eitc.filingStatus", "eitc.agiAnnual"],
+  "optionalFieldIds": [
+    "eitc.earnedAnnual",
+    "eitc.qualifyingChildrenCount",
+    "eitc.investmentIncomeWithinLimit",
+    "eitc.childlessAge25to64",
+    "eitc.childlessResidenceAndDependencyChecks",
+    "eitc.specialRuleApplies",
+    "employment",
+    "ageBand"
+  ],
+  "value": {
+    "kind": "range",
+    "text": "For tax year 2025 the published maximum credit is $649 with no qualifying children and up to $8,046 with three or more. These are ceilings, not amounts you are guaranteed.",
+    "evidenceIds": ["ev.eitc.maxcredit2025"],
+    "period": "year"
+  },
+  "documents": [
+    {
+      "id": "doc.eitc.income_records",
+      "label": "Your income records for the tax year, such as W-2 or 1099 forms",
+      "whenRuleId": null,
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.eitc.basic_rules"]
+    },
+    {
+      "id": "doc.eitc.ssn_note",
+      "label": "A valid Social Security number is required by the return due date — do not enter it here",
+      "whenRuleId": null,
+      "requiredness": "required",
+      "evidenceIds": ["ev.eitc.basic_rules"]
+    }
+  ],
+  "application": [
+    {
+      "id": "app.eitc.assistant",
+      "label": "Check with the official IRS EITC Assistant",
+      "url": "https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit/use-the-eitc-assistant",
+      "evidenceIds": ["ev.eitc.assistant"]
+    },
+    {
+      "id": "app.eitc.free_prep",
+      "label": "Find free tax return preparation by trained volunteers",
+      "url": "https://www.irs.gov/individuals/free-tax-return-preparation-for-you-by-volunteers",
+      "evidenceIds": ["ev.eitc.free_prep"]
+    },
+    {
+      "id": "app.eitc.free_file",
+      "label": "See free electronic filing options",
+      "url": "https://www.irs.gov/e-file-do-your-taxes-for-free",
+      "evidenceIds": ["ev.eitc.free_prep"]
+    }
+  ],
+  "fallbackExplanation": "The Earned Income Tax Credit lowers the tax owed by people who work and earn a low to moderate income, and can lead to a refund. Whether you qualify depends on your earned income, your adjusted gross income, your filing status and how many qualifying children you claim, so this is only a preliminary look. The IRS makes the final decision when your return is filed.",
+  "fallbackChecklistIds": ["app.eitc.assistant", "app.eitc.free_prep", "doc.eitc.income_records"]
+}

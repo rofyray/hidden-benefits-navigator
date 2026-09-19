@@ -1,0 +1,37 @@
+{
+  "catalogVersion": "1.0.0",
+  "rulesVersion": "1.0.0",
+  "builtOn": "2026-09-19",
+  "programs": [
+    {
+      "id": "snap",
+      "version": "0.1.0",
+      "contentHash": "47c3bfd050b3eff5003f5547340b4f1893aa3064a8cc7b4b3ed0a88eed223d64"
+    },
+    {
+      "id": "eitc",
+      "version": "0.1.0",
+      "contentHash": "f61d34df9c2bca7c0b6f65bd9a0787c09f9f82f32d0d4e2554331196bde7967c"
+    },
+    {
+      "id": "ceap",
+      "version": "0.1.0",
+      "contentHash": "e9c402412a9367218f5c5d9a307c5edc5a07b807648aa0113850ebdf435ef695"
+    },
+    {
+      "id": "medicare_help",
+      "version": "0.1.0",
+      "contentHash": "96ea23ac3f8dc6cbbeddf1d036cc70c1f65c387da048360392c9ee67a3b56871"
+    },
+    {
+      "id": "wic",
+      "version": "0.1.0",
+      "contentHash": "2f2be135d38cbd0fa285af07eea8d9e5b4da2c341b0baa8acf297c9912a5cc2a"
+    },
+    {
+      "id": "lifeline",
+      "version": "0.1.0",
+      "contentHash": "24c118ffed33587946636f5ef17cd264e60c5e6eb4d16edf53c41e01f67b426b"
+    }
+  ]
+}

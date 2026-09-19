@@ -1,0 +1,322 @@
+{
+  "id": "wic",
+  "name": "WIC food and nutrition help",
+  "jurisdiction": "TX",
+  "version": "0.1.0",
+  "status": "published",
+  "validFrom": "2026-09-19",
+  "validTo": null,
+  "reviewDueOn": "2026-12-19",
+  "coverage": "Screens the two Texas WIC pathways separately: the category pathway (pregnant, postpartum, breastfeeding, or a child under 5) and the income pathway (the published Texas household income table, or automatic income eligibility through Medicaid, SNAP or TANF). The nutrition assessment is done by the clinic and is never estimated here.",
+  "limitations": [
+    "The effective period of the published Texas income table could not be confirmed; the federal table that would date it was unreachable.",
+    "This screen never infers pregnancy or any category; it only uses what a person states.",
+    "Nutritional risk is decided at the clinic appointment and is not screened here.",
+    "The table published on the state page covers households of one to six; larger households are told to call the clinic.",
+    "Which income counts, and weekly or biweekly measurement, is decided by the clinic."
+  ],
+  "eligibilitySummary": [
+    "WIC helps pregnant women, new and breastfeeding mothers, and families with children under 5 with healthy food and nutrition support.",
+    "There are two parts: being in one of those categories, and meeting the income guidelines.",
+    "Having Medicaid, SNAP or TANF already meets the WIC income guidelines.",
+    "The clinic appointment includes a visit with a nutrition expert, and the clinic decides eligibility."
+  ],
+  "evidence": [
+    {
+      "id": "ev.wic.categories",
+      "text": "Texas WIC states that WIC is for pregnant women, breastfeeding women, women who had a baby within the last six months, and parents, step-parents, guardians and foster parents of infants and children younger than 5.",
+      "sourceIds": ["src.wic.apply"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.wic.durations",
+      "text": "Texas WIC states that infants and children can stay on WIC until they turn 5, pregnant women receive benefits until the end of the pregnancy, fully or partially breastfeeding women until the baby is 1 year old, and mostly or only formula-feeding women until the baby is 6 months old.",
+      "sourceIds": ["src.wic.apply"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.wic.income_table",
+      "text": "The Texas WIC page lists gross monthly household income guidelines of $2,461 for 1 household member, $3,337 for 2, $4,212 for 3, $5,088 for 4, $5,964 for 5 and $6,839 for 6, and the matching gross yearly figures of $29,526, $40,034, $50,542, $61,050, $71,558 and $82,066.",
+      "sourceIds": ["src.wic.apply"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.wic.income_table_undated",
+      "text": "The published table carries no effective period, and the federal WIC income eligibility guidelines page that would date it returned HTTP 403 on September 19, 2026, so the figures are used with the caveat that their effective period is unconfirmed; the site footer states the site was last updated September 17, 2026.",
+      "sourceIds": ["src.wic.apply", "src.wic.fns_guidelines"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.wic.categorical_income",
+      "text": "Texas WIC states that people who receive Medicaid, SNAP or TANF already meet the income eligibility guidelines for WIC, and that taking part in other benefit programs does not change the amount of WIC benefits.",
+      "sourceIds": ["src.wic.apply"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.wic.expected_infants",
+      "text": "Texas WIC states that a pregnant woman's household can be increased by the number of infants she is expecting, and that households larger than six, or anyone with income questions, should call the local WIC clinic.",
+      "sourceIds": ["src.wic.apply"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.wic.residence",
+      "text": "Texas WIC states that you must live in Texas and apply in person to learn if you are eligible.",
+      "sourceIds": ["src.wic.apply"],
+      "kind": "eligibility"
+    },
+    {
+      "id": "ev.wic.clinic_assessment",
+      "text": "The WIC appointment includes a visit with a nutrition expert who helps determine eligibility; WIC measures, weighs and checks the iron level of each family member applying.",
+      "sourceIds": ["src.wic.apply"],
+      "kind": "caveat"
+    },
+    {
+      "id": "ev.wic.apply_steps",
+      "text": "An application can be started online or by phone; a team member from the local WIC office then contacts the applicant to set up the first appointment, and the office locator or 800-942-3678 finds the nearest clinic.",
+      "sourceIds": ["src.wic.apply", "src.wic.office_locator"],
+      "kind": "application"
+    },
+    {
+      "id": "ev.wic.documents",
+      "text": "Texas WIC states that the local office will tell the applicant what is needed, which typically includes proof of address, benefit programs, income and identification.",
+      "sourceIds": ["src.wic.apply"],
+      "kind": "document"
+    },
+    {
+      "id": "ev.wic.value",
+      "text": "People who qualify receive food benefits designed to meet their needs and a WIC card to use at the grocery store, along with nutrition counseling and breastfeeding support.",
+      "sourceIds": ["src.wic.apply"],
+      "kind": "value"
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.wic.state",
+      "fieldIds": ["state"],
+      "evidenceIds": ["ev.wic.residence"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "state", "values": ["TX"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.wic.category",
+      "fieldIds": [],
+      "evidenceIds": ["ev.wic.categories", "ev.wic.durations"],
+      "operator": "any",
+      "operands": {
+        "ruleIds": [
+          "rule.wic.category_pregnant",
+          "rule.wic.category_postpartum",
+          "rule.wic.category_breastfeeding",
+          "rule.wic.category_child_under5"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.wic.category_pregnant",
+      "fieldIds": ["pregnant"],
+      "evidenceIds": ["ev.wic.categories"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "pregnant", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.wic.category_postpartum",
+      "fieldIds": ["postpartumUnder6Months"],
+      "evidenceIds": ["ev.wic.categories", "ev.wic.durations"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "postpartumUnder6Months", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.wic.category_breastfeeding",
+      "fieldIds": ["breastfeedingUnder12Months"],
+      "evidenceIds": ["ev.wic.durations"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "breastfeedingUnder12Months", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.wic.category_child_under5",
+      "fieldIds": ["childUnder5"],
+      "evidenceIds": ["ev.wic.categories", "ev.wic.durations"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "childUnder5", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.wic.income_table",
+      "fieldIds": ["income", "wic.applicableHouseholdSize"],
+      "evidenceIds": ["ev.wic.income_table", "ev.wic.income_table_undated"],
+      "operator": "lte",
+      "operands": {
+        "fieldId": "income",
+        "amountCents": null,
+        "householdScale": {
+          "householdFieldId": "wic.applicableHouseholdSize",
+          "bySize": {
+            "1": 246100,
+            "2": 333700,
+            "3": 421200,
+            "4": 508800,
+            "5": 596400,
+            "6": 683900
+          },
+          "additionalPerPersonCents": null
+        },
+        "currency": "USD",
+        "period": "monthly",
+        "basis": "gross"
+      },
+      "effect": "screening",
+      "exceptionRuleIds": ["rule.wic.categorical_income", "rule.wic.large_household_referral"],
+      "blocksLikelyWhenUnknown": true
+    },
+    {
+      "id": "rule.wic.categorical_income",
+      "fieldIds": ["receivesMedicaid", "receivesSnap", "receivesTanf"],
+      "evidenceIds": ["ev.wic.categorical_income"],
+      "operator": "any",
+      "operands": {
+        "ruleIds": [
+          "rule.wic.has_medicaid",
+          "rule.wic.has_snap_enrollment",
+          "rule.wic.has_tanf"
+        ]
+      },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.wic.has_medicaid",
+      "fieldIds": ["receivesMedicaid"],
+      "evidenceIds": ["ev.wic.categorical_income"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "receivesMedicaid", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.wic.has_snap_enrollment",
+      "fieldIds": ["receivesSnap"],
+      "evidenceIds": ["ev.wic.categorical_income"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "receivesSnap", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.wic.has_tanf",
+      "fieldIds": ["receivesTanf"],
+      "evidenceIds": ["ev.wic.categorical_income"],
+      "operator": "enumIn",
+      "operands": { "fieldId": "receivesTanf", "values": ["yes"] },
+      "effect": "screening",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.wic.large_household_referral",
+      "fieldIds": ["wic.applicableHouseholdSize"],
+      "evidenceIds": ["ev.wic.expected_infants"],
+      "operator": "referral",
+      "operands": { "reasonCode": "household_larger_than_published_table" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    },
+    {
+      "id": "rule.wic.clinic_assessment_referral",
+      "fieldIds": [],
+      "evidenceIds": ["ev.wic.clinic_assessment"],
+      "operator": "referral",
+      "operands": { "reasonCode": "nutrition_assessment_done_at_clinic" },
+      "effect": "referral",
+      "exceptionRuleIds": [],
+      "blocksLikelyWhenUnknown": false
+    }
+  ],
+  "requiredFieldIds": ["state"],
+  "optionalFieldIds": [
+    "householdSize",
+    "income",
+    "pregnant",
+    "postpartumUnder6Months",
+    "breastfeedingUnder12Months",
+    "childUnder5",
+    "receivesMedicaid",
+    "receivesSnap",
+    "receivesTanf",
+    "wic.applicableHouseholdSize",
+    "wic.expectedInfants",
+    "wic.householdBasisConfirmed"
+  ],
+  "value": {
+    "kind": "variable",
+    "text": "WIC provides food benefits on a WIC card plus nutrition counselling and breastfeeding support; the food package is set to the person's needs.",
+    "evidenceIds": ["ev.wic.value"],
+    "period": "month"
+  },
+  "documents": [
+    {
+      "id": "doc.wic.identification",
+      "label": "Identification, and proof of your address.",
+      "whenRuleId": null,
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.wic.documents"]
+    },
+    {
+      "id": "doc.wic.income_proof",
+      "label": "Proof of income — only if you are not already on Medicaid, SNAP or TANF.",
+      "whenRuleId": "rule.wic.income_table",
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.wic.documents", "ev.wic.categorical_income"]
+    },
+    {
+      "id": "doc.wic.benefit_proof",
+      "label": "Proof of your Medicaid, SNAP or TANF benefits, if you have them.",
+      "whenRuleId": "rule.wic.categorical_income",
+      "requiredness": "mayNeed",
+      "evidenceIds": ["ev.wic.documents", "ev.wic.categorical_income"]
+    },
+    {
+      "id": "doc.wic.ask_clinic",
+      "label": "The clinic will tell you exactly what to bring when it calls you.",
+      "whenRuleId": null,
+      "requiredness": "askAgency",
+      "evidenceIds": ["ev.wic.documents", "ev.wic.apply_steps"]
+    }
+  ],
+  "application": [
+    {
+      "id": "app.wic.apply",
+      "label": "Start a Texas WIC application online, or call 800-942-3678.",
+      "url": "https://texaswic.org/apply",
+      "evidenceIds": ["ev.wic.apply_steps"]
+    },
+    {
+      "id": "app.wic.locator",
+      "label": "Find the WIC office nearest you.",
+      "url": "https://office.texaswic.org/",
+      "evidenceIds": ["ev.wic.apply_steps"]
+    }
+  ],
+  "fallbackExplanation": "WIC has two parts: being pregnant, recently postpartum, breastfeeding, or caring for a child under 5, and meeting the income guidelines — which Medicaid, SNAP or TANF already meet. The clinic checks the rest at your first appointment, including a visit with a nutrition expert, and makes the decision.",
+  "fallbackChecklistIds": ["app.wic.apply", "app.wic.locator", "doc.wic.ask_clinic"]
+}
