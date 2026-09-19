@@ -8,7 +8,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P2-01 — Create the local model adapter
 
-- [ ] **P2-01: Create the local model adapter**
+- [x] **P2-01: Create the local model adapter**
 
 **Depends on:** P1-17.
 

@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import {
-  getLanguageModel,
   probeLocalSpeech,
   probeLocalVoice,
   probeMicrophone,
@@ -11,6 +10,7 @@ import {
   type CapabilityReport,
   type CapabilityState,
 } from "@/client/adapters/capabilities";
+import { createLocalModelAdapter, LocalModelError } from "@/client/adapters/nano";
 import { probeJev, type JevProbeResult } from "@/lib/preflight.functions";
 
 export const Route = createFileRoute("/preflight")({
@@ -49,7 +49,18 @@ function Preflight() {
   const [reports, setReports] = useState<CapabilityReport[] | null>(null);
   const [downloadNote, setDownloadNote] = useState<string | null>(null);
   const [jev, setJev] = useState<JevProbeResult | "running" | null>(null);
+  const [settingUp, setSettingUp] = useState(false);
   const runJevProbe = useServerFn(probeJev);
+  const adapter = useRef(createLocalModelAdapter());
+  const setupAbort = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    const active = adapter.current;
+    return () => {
+      setupAbort.current?.abort();
+      active.destroyAll();
+    };
+  }, []);
 
   const runChecks = useCallback(async () => {
     const [nano, microphone] = await Promise.all([probeNano(), probeMicrophone()]);
@@ -63,26 +74,37 @@ function Preflight() {
   const nano = reports?.find((r) => r.id === "nano");
   const plan = reports ? selectCapabilityPlan(reports) : null;
 
-  const startDownload = async () => {
-    const model = getLanguageModel();
-    if (!model || typeof model.create !== "function") return;
-    setDownloadNote("Starting the download…");
+  // The setup action is the only thing that creates a session, and every session
+  // it creates is released when this page goes away.
+  const startSetup = async () => {
+    const controller = new AbortController();
+    setupAbort.current = controller;
+    setSettingUp(true);
+    setDownloadNote("Starting the setup…");
     try {
-      await model.create({
-        monitor: (m: EventTarget) =>
-          m.addEventListener("downloadprogress", (event: Event) => {
-            const loaded = (event as Event & { loaded?: number }).loaded ?? 0;
-            setDownloadNote(`Downloading… ${Math.round(loaded * 100)}%`);
-          }),
+      const session = await adapter.current.createSession({
+        purpose: "extraction",
+        requestedByUser: true,
+        signal: controller.signal,
+        onProgress: (loaded) => setDownloadNote(`Getting ready… ${Math.round(loaded * 100)}%`),
       });
-      setDownloadNote("Download finished. Re-running the check.");
+      session.destroy();
+      setDownloadNote("Ready on this device. Re-running the check.");
       await runChecks();
-    } catch {
+    } catch (error) {
+      const code = error instanceof LocalModelError ? error.code : "local_session_failed";
       setDownloadNote(
-        "The download could not be started on this device. The typed form still works.",
+        code === "local_cancelled"
+          ? "Setup stopped. The typed form still works."
+          : "Setup could not finish on this device. The typed form still works.",
       );
+    } finally {
+      setupAbort.current = null;
+      setSettingUp(false);
     }
   };
+
+  const cancelSetup = () => setupAbort.current?.abort();
 
   const askForMicrophone = async () => {
     try {
@@ -130,13 +152,27 @@ function Preflight() {
           >
             Run the check again
           </button>
-          {(nano?.state === "downloadable" || nano?.state === "downloading") && (
+          {(nano?.state === "downloadable" ||
+            nano?.state === "downloading" ||
+            nano?.state === "available") &&
+            !settingUp && (
+              <button
+                type="button"
+                onClick={() => void startSetup()}
+                className="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-medium"
+              >
+                {nano.state === "available"
+                  ? "Test the on-device model"
+                  : "Set up the on-device model"}
+              </button>
+            )}
+          {settingUp && (
             <button
               type="button"
-              onClick={() => void startDownload()}
-              className="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-medium"
+              onClick={cancelSetup}
+              className="border-border rounded-md border px-4 py-2 text-sm font-medium"
             >
-              Download the on-device model
+              Stop the setup
             </button>
           )}
           <button

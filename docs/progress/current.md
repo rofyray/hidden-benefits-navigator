@@ -1,7 +1,7 @@
 # Progress
 
-Last completed: **P1-17 — Data and backend phase gate** (2026-09-19)
-Current task: **P2-01** — not started
+Last completed: **P2-01 — Local model adapter** (2026-09-19)
+Current task: **P2-02** — not started
 
 
 ## Completed
@@ -25,12 +25,17 @@ Current task: **P2-01** — not started
 | P1-15 Explanation and checklist verification | docs/evidence/P1-15.md |
 | P1-16 Labeled policy evaluation | docs/evidence/P1-16.md |
 | P1-17 Data and backend phase gate | docs/evidence/P1-17.md |
+| P2-01 Local model adapter | docs/evidence/P2-01.md |
 
 ## Open blockers
 
 - **Live synthetic evaluation has not been run** (`bun run test:eval --live`): it
   needs the configured provider and the hosted `EVALUATION_TOKEN_SECRET`. Recorded
   release blocker per the release plan.
+- **The on-device model has not been exercised on a real device.** The sandbox
+  browser has no Prompt API, so the downloadable/downloading/available paths are
+  covered only by unit tests. Repeat the setup check on the demo device and final
+  origin.
 - **The "Likely" label is untested on positive cases.** Five of six programs are
   capped at "Possibly" by unverified source effective dates, so the labeled
   evaluation could not exercise the strong-match path. Re-run once the 403-blocked
