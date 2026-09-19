@@ -1,7 +1,7 @@
 # Progress
 
-Last completed: **P2-02 — Structured extraction** (2026-09-19)
-Current task: **P2-03** — not started
+Last completed: **P2-03 — Fact review and manual entry** (2026-09-19)
+Current task: **P2-04** — not started
 
 
 ## Completed
@@ -27,6 +27,7 @@ Current task: **P2-03** — not started
 | P1-17 Data and backend phase gate | docs/evidence/P1-17.md |
 | P2-01 Local model adapter | docs/evidence/P2-01.md |
 | P2-02 Structured extraction | docs/evidence/P2-02.md |
+| P2-03 Fact review and manual entry | docs/evidence/P2-03.md |
 
 ## Open blockers
 

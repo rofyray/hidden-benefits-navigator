@@ -60,7 +60,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P2-03 — Build fact review and manual entry logic
 
-- [ ] **P2-03: Build fact review and manual entry logic**
+- [x] **P2-03: Build fact review and manual entry logic**
 
 **Depends on:** P2-02.
 
@@ -70,15 +70,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Show proposed facts with plain labels, unknown options and relevant program-specific inputs.
+- [x] Show proposed facts with plain labels, unknown options and relevant program-specific inputs.
 
-- [ ] Make confirmation/editing precede cloud screening; preserve manual edits over late extraction responses.
+- [x] Make confirmation/editing precede cloud screening; preserve manual edits over late extraction responses.
 
-- [ ] Keep narrative/source spans in memory and omit them from the network projection.
+- [x] Keep narrative/source spans in memory and omit them from the network projection.
 
 **Acceptance:**
 
-- [ ] A person can correct any inferred fact or complete the guided form without local AI
+- [x] A person can correct any inferred fact or complete the guided form without local AI
 
 **Verify:** Component/state tests and network payload projection assertions.
 

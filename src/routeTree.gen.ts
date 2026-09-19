@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PreflightRouteImport } from './routes/preflight'
+import { Route as ReviewRouteImport } from './routes/review'
 import { Route as ApiEvaluateRouteImport } from './routes/api/evaluate'
 import { Route as ApiVerifyRouteImport } from './routes/api/verify'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const PreflightRoute = PreflightRouteImport.update({
   id: '/preflight',
   path: '/preflight',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewRoute = ReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiEvaluateRoute = ApiEvaluateRouteImport.update({
@@ -44,6 +50,7 @@ const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/preflight': typeof PreflightRoute
+  '/review': typeof ReviewRoute
   '/api/evaluate': typeof ApiEvaluateRoute
   '/api/verify': typeof ApiVerifyRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/preflight': typeof PreflightRoute
+  '/review': typeof ReviewRoute
   '/api/evaluate': typeof ApiEvaluateRoute
   '/api/verify': typeof ApiVerifyRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -59,6 +67,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/preflight': typeof PreflightRoute
+  '/review': typeof ReviewRoute
   '/api/evaluate': typeof ApiEvaluateRoute
   '/api/verify': typeof ApiVerifyRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -66,14 +75,25 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/preflight' | '/api/evaluate' | '/api/verify' | '/api/public/health'
+    | '/'
+    | '/preflight'
+    | '/review'
+    | '/api/evaluate'
+    | '/api/verify'
+    | '/api/public/health'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/preflight' | '/api/evaluate' | '/api/verify' | '/api/public/health'
+    | '/'
+    | '/preflight'
+    | '/review'
+    | '/api/evaluate'
+    | '/api/verify'
+    | '/api/public/health'
   id:
     | '__root__'
     | '/'
     | '/preflight'
+    | '/review'
     | '/api/evaluate'
     | '/api/verify'
     | '/api/public/health'
@@ -82,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PreflightRoute: typeof PreflightRoute
+  ReviewRoute: typeof ReviewRoute
   ApiEvaluateRoute: typeof ApiEvaluateRoute
   ApiVerifyRoute: typeof ApiVerifyRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
@@ -101,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/preflight'
       fullPath: '/preflight'
       preLoaderRoute: typeof PreflightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review': {
+      id: '/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof ReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/evaluate': {
@@ -130,6 +158,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PreflightRoute: PreflightRoute,
+  ReviewRoute: ReviewRoute,
   ApiEvaluateRoute: ApiEvaluateRoute,
   ApiVerifyRoute: ApiVerifyRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
