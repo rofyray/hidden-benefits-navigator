@@ -164,7 +164,7 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 ## P2-07 — Gate display through server verification
 
-- [ ] **P2-07: Gate display through server verification**
+- [x] **P2-07: Gate display through server verification**
 
 **Depends on:** P2-06.
 
@@ -174,15 +174,15 @@ The top-level task checkbox is the authoritative completion marker. Complete eve
 
 **Implementation:**
 
-- [ ] Send sanitized sentences/checklist text through `/api/verify` with the evaluation token.
+- [x] Send sanitized sentences/checklist text through `/api/verify` with the evaluation token.
 
-- [ ] Withhold all draft prose from DOM and playback until approved; assemble whole-card fallback when required.
+- [x] Withhold all draft prose from DOM and playback until approved; assemble whole-card fallback when required.
 
-- [ ] Keep official values/links selected by code and expose content approval mode.
+- [x] Keep official values/links selected by code and expose content approval mode.
 
 **Acceptance:**
 
-- [ ] An unsupported explanation or checklist is never seen or spoken; a failed card does not erase approved cards
+- [x] An unsupported explanation or checklist is never seen or spoken; a failed card does not erase approved cards
 
 **Verify:** DOM/text/playback guards, multi-card partial failure and invalid verification response tests.
 

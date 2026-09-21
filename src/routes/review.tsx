@@ -27,6 +27,14 @@ import {
   type ClarifyAnswer,
 } from "@/client/clarify";
 import { selectGroups } from "@/client/extraction/extract";
+import {
+  buildSnapshots,
+  composeDrafts,
+  sessionFactoryFrom,
+  type ComposedCard,
+} from "@/client/compose";
+import { gateDrafts, type Plan } from "@/client/verify";
+import { canCreateSession, createLocalModelAdapter } from "@/client/adapters/nano";
 import type { MoneyInterval } from "@/shared/contracts";
 
 export const Route = createFileRoute("/review")({
@@ -74,10 +82,64 @@ function Review() {
   useEffect(() => orchestrator.subscribe(setScreening), [orchestrator]);
   useEffect(() => () => orchestrator.invalidate(), [orchestrator]);
 
+  // The plan is the only thing rendered: it contains generated prose only for
+  // items the server approved, so nothing unapproved can reach the page.
+  const [plan, setPlan] = useState<Plan | null>(null);
+  const [planStage, setPlanStage] = useState<"idle" | "working" | "done">("idle");
+
   const dispatch = (action: ReviewAction) => {
-    if (action.type !== "confirm") orchestrator.invalidate();
+    if (action.type !== "confirm") {
+      orchestrator.invalidate();
+      setPlan(null);
+      setPlanStage("idle");
+    }
     setState((previous) => reviewReducer(previous, action));
   };
+
+  const screeningResponse = screening.stage === "ready" ? screening.response : null;
+  const screeningRevision = screening.forRevision;
+
+  useEffect(() => {
+    if (!screeningResponse || screeningRevision !== state.revision) return;
+    const controller = new AbortController();
+    let cancelled = false;
+    setPlanStage("working");
+
+    void (async () => {
+      const snapshots = buildSnapshots(screeningResponse);
+      const adapter = createLocalModelAdapter();
+      const modelState = await adapter.probe().catch(() => "unavailable" as const);
+
+      // Without an on-device model there is nothing to draft; the curated cards
+      // still make a usable plan.
+      const cards: ComposedCard[] = canCreateSession(modelState)
+        ? (
+            await composeDrafts(snapshots, sessionFactoryFrom(adapter), {
+              signal: controller.signal,
+            })
+          ).cards
+        : snapshots.map((snapshot) => ({
+            programId: snapshot.programId,
+            source: "curated" as const,
+            failure: "session_failed" as const,
+            curated: null,
+          }));
+
+      const gated = await gateDrafts(cards, {
+        revision: screeningResponse.revision,
+        evaluationToken: screeningResponse.evaluationToken,
+        signal: controller.signal,
+      });
+      if (cancelled) return;
+      setPlan(gated.plan);
+      setPlanStage("done");
+    })();
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [screeningResponse, screeningRevision, state.revision]);
 
   const currentQuestion = session.currentId ? questionById(session.currentId) : undefined;
 
@@ -475,6 +537,60 @@ function Review() {
         <p aria-live="polite" className="mt-2 text-sm font-medium" data-testid="screening-stage">
           {screeningMessage}
         </p>
+      )}
+
+      {planStage === "working" && (
+        <p aria-live="polite" className="mt-4 text-sm">
+          Putting your next steps together&hellip;
+        </p>
+      )}
+
+      {plan && planStage === "done" && plan.revision === state.revision && (
+        <section aria-labelledby="plan-heading" className="mt-10" data-testid="plan">
+          <h2 id="plan-heading" className="text-xl font-semibold">
+            Your next steps
+          </h2>
+          <ul className="mt-4 space-y-4">
+            {plan.cards.map((card) => (
+              <li
+                key={card.programId}
+                className="border-border rounded-lg border p-4"
+                data-testid={`plan-card-${card.programId}`}
+                data-approval={card.approvalMode}
+              >
+                <h3 className="font-semibold">{card.programName}</h3>
+                {card.sentences.map((sentence, index) => (
+                  <p key={index} className="mt-2 text-sm">
+                    {sentence}
+                  </p>
+                ))}
+                {card.explanation && <p className="mt-2 text-sm">{card.explanation}</p>}
+                <p className="text-muted-foreground mt-2 text-sm">{card.officialValue}</p>
+                {card.checklist.length > 0 && (
+                  <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
+                    {card.checklist.map((entry) => (
+                      <li key={entry.id}>{entry.text}</li>
+                    ))}
+                  </ul>
+                )}
+                <ul className="mt-3 space-y-1 text-sm">
+                  {card.links.map((link) => (
+                    <li key={link.id}>
+                      <a href={link.url} className="underline" rel="noreferrer noopener">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+          <p className="text-muted-foreground mt-4 text-sm">
+            {plan.approvedCount === 0
+              ? "All of this wording comes from the official sources, checked by hand."
+              : "Wording written for you is shown only after it was checked against the official sources."}
+          </p>
+        </section>
       )}
     </main>
   );

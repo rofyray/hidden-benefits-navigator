@@ -1,7 +1,7 @@
 # Progress
 
-Last completed: **P2-06 — Compose grounded explanations and checklist drafts** (2026-09-19)
-Current task: **P2-07** — not started
+Last completed: **P2-07 — Gate display through server verification** (2026-09-21)
+Current task: **P2-08** — not started
 
 
 ## Completed
@@ -31,6 +31,7 @@ Current task: **P2-07** — not started
 | P2-04 One-question clarification | docs/evidence/P2-04.md |
 | P2-05 Evaluation orchestration | docs/evidence/P2-05.md |
 | P2-06 Grounded draft composition | docs/evidence/P2-06.md |
+| P2-07 Verified display gate | docs/evidence/P2-07.md |
 
 ## Open blockers
 
